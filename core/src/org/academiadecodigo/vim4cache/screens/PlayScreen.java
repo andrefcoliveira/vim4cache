@@ -132,6 +132,7 @@ public class PlayScreen implements Screen{
 
         gameCam.update();
         renderer.setView(gameCam);
+
     }
 
     private void handleInput() {

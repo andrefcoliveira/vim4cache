@@ -23,12 +23,16 @@ public class Hud {
     private Integer health;
     private Integer score;
 
-    Label timerLabel;
+    Label countLabel;
+    Label timeLabel;
     Label healthLabel;
+    Label hpLabel;
     Label scoreLabel;
+    Label scoreBoard;
 
     public Hud(SpriteBatch spriteBatch){
-        time = 60;
+
+        time = 120;
         health = 100;
         score = 0;
 
@@ -39,24 +43,40 @@ public class Hud {
         //Create an instance that receives all info about the character
         Table table = new Table();
 
-        table.center();
+        table.top();
         table.setFillParent(true);
 
         //colors of our text
 
         //timer set and color
-        timerLabel = new Label(String.format("%02d", time), new Label.LabelStyle(new BitmapFont(), Color.RED));
+        countLabel = new Label(String.format("%02d", time), new Label.LabelStyle(new BitmapFont(), Color.RED));
+        countLabel.setFontScale(2);
 
+        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel.setFontScale(4);
         //health set and color
-        healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), Color.RED));
+        healthLabel.setFontScale(2);
 
+        hpLabel = new Label("HP", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        hpLabel.setFontScale(4);
         //score set and color
-        scoreLabel = new Label(String.format("%05d", score), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        scoreLabel = new Label(String.format("%05d", score), new Label.LabelStyle(new BitmapFont(), Color.RED));
+        scoreLabel.setFontScale(2);
+
+        scoreBoard = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreBoard.setFontScale(4);
 
         //insert in table all the labels in the table, to see on the screen
 
         //not sure about the padding
-        table.add(timerLabel).expandX();
+        table.add(timeLabel).expandX();
+        table.add(hpLabel).expandX();
+        table.add(scoreBoard).expandX();
+
+        table.row();
+
+        table.add(countLabel).expandX();
         table.add(healthLabel).expandX();
         table.add(scoreLabel).expandX();
 
