@@ -38,13 +38,14 @@ public class Hud {
 
         //Create an instance that receives all info about the character
         Table table = new Table();
-        table.top();
+
+        table.center();
         table.setFillParent(true);
 
         //colors of our text
 
         //timer set and color
-        timerLabel = new Label(String.format("%02d", time), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        timerLabel = new Label(String.format("%02d", time), new Label.LabelStyle(new BitmapFont(), Color.RED));
 
         //health set and color
         healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
