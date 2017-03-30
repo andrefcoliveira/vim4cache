@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="240" height="20" tilewidth="16" tileheight="16" nextobjectid="7">
+ <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
+  <image source="tileset_gutter.png" width="594" height="504"/>
+ </tileset>
+ <tileset firstgid="925" name="acDoor48x66" tilewidth="16" tileheight="16" tilecount="12" columns="3">
+  <image source="acDoor48x66.png" width="48" height="66"/>
+ </tileset>
+ <tileset firstgid="937" name="centerWindowTopFloor" tilewidth="16" tileheight="16" tilecount="12" columns="3">
+  <image source="centerWindowTopFloor.png" width="48" height="66"/>
+ </tileset>
+ <tileset firstgid="949" name="whiteBck16x16" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="whiteBck16x16.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="950" name="firstFloorDoor48x66" tilewidth="16" tileheight="16" tilecount="12" columns="3">
+  <image source="firstFloorDoor48x66.png" width="48" height="66"/>
+ </tileset>
+ <tileset firstgid="962" name="cacaEpesca" tilewidth="16" tileheight="16" tilecount="165" columns="15">
+  <image source="cacaEpesca.jpg" width="240" height="182"/>
+ </tileset>
+ <tileset firstgid="1127" name="IMG_20170330_154846" tilewidth="16" tileheight="16" tilecount="130" columns="10">
+  <image source="IMG_20170330_154846.png" width="160" height="208"/>
+ </tileset>
+ <tileset firstgid="1257" name="firstFloorLeftWindow48x66" tilewidth="16" tileheight="16" tilecount="12" columns="3">
+  <image source="firstFloorLeftWindow48x66.png" width="48" height="66"/>
+ </tileset>
+ <tileset firstgid="1269" name="mail" tilewidth="16" tileheight="16" tilecount="3" columns="1">
+  <image source="mail.png" width="16" height="48"/>
+ </tileset>
+ <tileset firstgid="1272" name="noparking" tilewidth="16" tileheight="16" tilecount="3" columns="1">
+  <image source="noparking.png" width="16" height="48"/>
+ </tileset>
+ <tileset firstgid="1275" name="faceOnWall32x48" tilewidth="16" tileheight="16" tilecount="6" columns="2">
+  <image source="faceOnWall32x48.png" width="32" height="48"/>
+ </tileset>
+ <tileset firstgid="1281" name="coisa" tilewidth="16" tileheight="16" tilecount="3" columns="1">
+  <image source="coisa.png" width="16" height="48"/>
+ </tileset>
+ <tileset firstgid="1284" name="obras" tilewidth="16" tileheight="16" tilecount="130" columns="10">
+  <image source="obras.png" width="160" height="208"/>
+ </tileset>
+ <tileset firstgid="1414" name="obras2" tilewidth="16" tileheight="16" tilecount="130" columns="10">
+  <image source="obras2.png" width="160" height="208"/>
+ </tileset>
+ <tileset firstgid="1544" name="Banner -Academia de Código_-" tilewidth="16" tileheight="16" tilecount="30" columns="3">
+  <image source="Banner -Academia de C¢digo_-.png" width="48" height="161"/>
+ </tileset>
+ <tileset firstgid="1574" name="xalana" tilewidth="16" tileheight="16" tilecount="112" columns="14">
+  <image source="xalana.png" width="238" height="142"/>
+ </tileset>
+ <tileset firstgid="1686" name="GraffitiCreator1" tilewidth="16" tileheight="16" tilecount="39" columns="13">
+  <image source="GraffitiCreator1.png" width="208" height="55"/>
+ </tileset>
+ <tileset firstgid="1725" name="palmTree" tilewidth="16" tileheight="16" tilecount="130" columns="10">
+  <image source="palmTree.jpg" width="162" height="213"/>
+ </tileset>
+ <tileset firstgid="1855" name="MONA" tilewidth="16" tileheight="16" tilecount="888" columns="24">
+  <image source="MONA.jpeg" width="389" height="600"/>
+ </tileset>
+ <tileset firstgid="2743" name="ACwall" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="ACwall.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="2744" name="Sem Título-7" tilewidth="16" tileheight="16" tilecount="299" columns="23">
+  <image source="Sem Título-7.png" width="370" height="208"/>
+ </tileset>
+ <tileset firstgid="3043" name="8bitsbrickhaus5458786767_zps8943bec7" tilewidth="16" tileheight="16" tilecount="91" columns="7">
+  <image source="8bitsbrickhaus5458786767_zps8943bec7.png" width="118" height="208"/>
+ </tileset>
+ <layer name="Background" width="240" height="20">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer name="Graphics" width="240" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAMA6Cqr+6+M7APEhIAAAAAAAAAAAAAAIBfVVVVVVVV1XOakW+O
+  </data>
+ </layer>
+ <objectgroup name="windows"/>
+ <objectgroup name="doors"/>
+ <objectgroup name="floor"/>
+</map>

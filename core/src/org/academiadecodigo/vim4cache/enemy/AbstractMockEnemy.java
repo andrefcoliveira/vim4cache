@@ -17,7 +17,7 @@ public abstract class AbstractMockEnemy extends Sprite{
     public AbstractMockEnemy(){}
 
     public AbstractMockEnemy(PlayScreen screen, float x, float y){
-        this.world = screen.getWorld();
+        //this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x, y);
         defineEnemy();
