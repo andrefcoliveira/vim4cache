@@ -2,23 +2,22 @@ package org.academiadecodigo.vim4cache.gameObjects;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.*;
 
 /**
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite{
+
     private int health;
     private World world;
     private Screen screen;
     private Body b2body;
-    private float x = 200;
-    private float y = 600;
-    private float speed;
 
 
 
-    public Character(World world, Screen screen) {
+    public Character(World world) {
         this.world = world;
         this.screen = screen;
         defineCharacter();
@@ -29,15 +28,17 @@ public class Character extends Sprite{
     }
 
     public void defineCharacter() {
-        this.speed = 10.0f;
-        this.health = 100;
+        health = 100;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(x, y);
+        bodyDef.position.set(32/2, 32/2);
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
+
+
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(25, 12.5f);
+        polygonShape.setAsBox(15, 30);
 
 
         fixtureDef.shape = polygonShape;
@@ -65,23 +66,6 @@ public class Character extends Sprite{
         this.health = health;
     }
 
-    @Override
-    public float getX() {
-        return x;
-    }
 
-    @Override
-    public void setX(float x) {
-        this.x = x;
-    }
 
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public void setY(float y) {
-        this.y = y;
-    }
 }
