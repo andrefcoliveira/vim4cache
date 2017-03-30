@@ -11,7 +11,11 @@ public class Character extends Sprite{
     private int health;
     private World world;
     private Screen screen;
-    public Body b2body;
+    private Body b2body;
+    private float x = 200;
+    private float y = 600;
+    private float speed;
+
 
 
     public Character(World world, Screen screen) {
@@ -25,14 +29,15 @@ public class Character extends Sprite{
     }
 
     public void defineCharacter() {
+        this.speed = 10.0f;
         this.health = 100;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(200, 600);
+        bodyDef.position.set(x, y);
         b2body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(50, 25);
+        polygonShape.setAsBox(25, 12.5f);
 
 
         fixtureDef.shape = polygonShape;
@@ -40,5 +45,43 @@ public class Character extends Sprite{
     }
 
 
+    public int getHealth() {
+        return health;
+    }
 
+    public World getWorld() {
+        return world;
+    }
+
+    public Screen getScreen() {
+        return screen;
+    }
+
+    public Body getB2body() {
+        return b2body;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public void setY(float y) {
+        this.y = y;
+    }
 }
