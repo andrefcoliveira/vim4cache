@@ -11,6 +11,7 @@ import org.academiadecodigo.vim4cache.screens.PlayScreen;
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite{
+
     private int health;
     private World world;
     private Screen screen;
@@ -26,10 +27,11 @@ public class Character extends Sprite{
 
 
     public Character(World world, PlayScreen playScreen) {
-        super(playScreen.getAtlas().findRegion(""));
+       // super(playScreen.getAtlas().findRegion(""));
         this.world = world;
+        this.screen = screen;
         defineCharacter();
-        characterDown = new TextureRegion(getTexture(),);
+        //characterDown = new TextureRegion(getTexture(),);
     }
 
     public void update(float delta) {

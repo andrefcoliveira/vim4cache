@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.enemy;
+package org.academiadecodigo.vim4cache.gameObjects.enemy;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,9 +14,11 @@ public abstract class AbstractMockEnemy extends Sprite{
     protected PlayScreen screen;
     public Body b2Body;
 
-    public AbstractMockEnemy(){}
+    public AbstractMockEnemy() {
+    }
 
-    public AbstractMockEnemy(PlayScreen screen, float x, float y){
+    public AbstractMockEnemy(PlayScreen screen, float x, float y) {
+
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x, y);
