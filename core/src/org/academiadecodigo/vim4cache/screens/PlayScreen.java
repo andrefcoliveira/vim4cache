@@ -46,7 +46,7 @@ public class PlayScreen implements Screen{
         hud = new Hud(caGame.batch);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level.tmx"); // tmx file
+        map = mapLoader.load("level1.tmx"); // tmx file
 
         renderer = new OrthogonalTiledMapRenderer(map);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
@@ -121,7 +121,7 @@ public class PlayScreen implements Screen{
     }
 
     public void update(float dt){
-        handleInput(dt);
+        handleInput();
 
         player.update(dt);
         world.step(1/60f, 6 ,2);
@@ -132,15 +132,10 @@ public class PlayScreen implements Screen{
 
     }
 
-    private void handleInput(float dt) {
-
-        if(Gdx.input.isTouched()){
-            gameCam.position.x += 100 * dt;
-        }
+    private void handleInput() {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
             player.getB2body().applyLinearImpulse(new Vector2(20, 0), player.getB2body().getWorldCenter(), true);
-            player.getB2body().
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.A)){

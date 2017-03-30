@@ -23,10 +23,10 @@ public class MockEnemy extends AbstractMockEnemy {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++) {
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("MockEnemy"), i * 16, 0, 16, 16));
+            //frames.add(new TextureRegion(screen.getAtlas().findRegion("MockEnemy"), i * 16, 0, 16, 16));
         }
 
-        walkAnimation = new Animation(0.4f, frames); //animation constructor is without parameters
+        //walkAnimation = new Animation(0.4f, frames); //animation constructor is without parameters
         stateTime = 0;
 
         setBounds(getX(), getY(), 16 / VariablesUtil.PPM, 16 / VariablesUtil.PPM);
@@ -35,7 +35,7 @@ public class MockEnemy extends AbstractMockEnemy {
     public void update(float delta) {
         stateTime += delta;
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
-        setRegion(walkAnimation.getKeyFrame(stateTime, true));
+        //setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
 
     @Override
