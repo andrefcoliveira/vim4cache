@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.gameObjects;
+package org.academiadecodigo.vim4cache.gameObjects.player;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,8 +14,6 @@ public class Character extends Sprite{
     private World world;
     private Screen screen;
     private Body b2body;
-
-
 
     public Character(World world) {
         this.world = world;
@@ -36,7 +34,6 @@ public class Character extends Sprite{
 
         FixtureDef fixtureDef = new FixtureDef();
 
-
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(15, 30);
 
@@ -44,7 +41,6 @@ public class Character extends Sprite{
         fixtureDef.shape = polygonShape;
         b2body.createFixture(fixtureDef);
     }
-
 
     public int getHealth() {
         return health;
@@ -65,7 +61,4 @@ public class Character extends Sprite{
     public void setHealth(int health) {
         this.health = health;
     }
-
-
-
 }
