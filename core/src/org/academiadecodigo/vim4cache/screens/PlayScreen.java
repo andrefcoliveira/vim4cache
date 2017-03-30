@@ -140,7 +140,7 @@ public class PlayScreen implements Screen{
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
             player.getB2body().applyLinearImpulse(new Vector2(20, 0), player.getB2body().getWorldCenter(), true);
-            player.getB2body().
+            
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
