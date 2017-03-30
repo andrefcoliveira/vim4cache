@@ -13,7 +13,7 @@ public class CaGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("/Users/codecadet/Desktop/VIM4Cache/vim4cache/core/assets/badlogic.jpg");
 	}
 
 	@Override
