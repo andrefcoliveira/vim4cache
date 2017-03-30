@@ -1,0 +1,12 @@
+
+characterAnimations.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+player
+  rotate: false
+  xy: 1, 1
+  size: 471, 320
+  orig: 471, 320
+  offset: 0, 0
+  index: -1

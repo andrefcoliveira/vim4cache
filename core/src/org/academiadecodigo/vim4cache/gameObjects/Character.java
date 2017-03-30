@@ -1,26 +1,35 @@
 package org.academiadecodigo.vim4cache.gameObjects;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
+import org.academiadecodigo.vim4cache.screens.PlayScreen;
 
 /**
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite{
-
     private int health;
     private World world;
     private Screen screen;
     private Body b2body;
+    private TextureRegion characterUp;
+    private TextureRegion characterDown;
+    private TextureRegion characterLeft;
+    private TextureRegion characterRight;
+    private Animation punchRight;
+    private Animation punchLeft;
+    private Animation jump;
 
 
 
-    public Character(World world) {
+    public Character(World world, PlayScreen playScreen) {
+        super(playScreen.getAtlas().findRegion(""));
         this.world = world;
-        this.screen = screen;
         defineCharacter();
+        characterDown = new TextureRegion(getTexture(),);
     }
 
     public void update(float delta) {

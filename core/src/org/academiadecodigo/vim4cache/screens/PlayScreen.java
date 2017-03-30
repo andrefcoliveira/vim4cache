@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -37,9 +38,10 @@ public class PlayScreen implements Screen{
     private Character player;
     private World world;
     private Hud hud;
+    private TextureAtlas atlas;
 
     public PlayScreen(CaGame caGame) {
-
+        atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(VariablesUtil.V_WIDTH/2, VariablesUtil.V_HEIGHT/2, gameCam);
@@ -54,7 +56,7 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
 
-        player = new Character(world);
+        player = new Character(world, this);
 
         new B2WorldCreator(world,map);
 
@@ -157,5 +159,13 @@ public class PlayScreen implements Screen{
 
     }
 
+
+    public World getWorld() {
+        return world;
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
 
 }
