@@ -7,15 +7,14 @@ import com.badlogic.gdx.physics.box2d.*;
 /**
  * Created by codecadet on 30/03/17.
  */
-public class Character extends Sprite{
+public class Character extends Sprite {
     private int health;
     private World world;
     private Screen screen;
     private Body b2body;
-    private float x = 200;
-    private float y = 600;
+    private float x = 300;
+    private float y = 300;
     private float speed;
-
 
 
     public Character(World world, Screen screen) {
@@ -25,23 +24,24 @@ public class Character extends Sprite{
     }
 
     public void update(float delta) {
-        setPosition(b2body.getPosition().x-getWidth()/2 , b2body.getPosition().y - getHeight()/2);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }
 
     public void defineCharacter() {
+        BodyDef bodyDef = new BodyDef();
         this.speed = 10.0f;
         this.health = 100;
-        BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x, y);
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(25, 12.5f);
-
+        polygonShape.setAsBox(50, 25);
 
         fixtureDef.shape = polygonShape;
         b2body.createFixture(fixtureDef);
+
     }
 
 
@@ -49,13 +49,7 @@ public class Character extends Sprite{
         return health;
     }
 
-    public World getWorld() {
-        return world;
-    }
 
-    public Screen getScreen() {
-        return screen;
-    }
 
     public Body getB2body() {
         return b2body;

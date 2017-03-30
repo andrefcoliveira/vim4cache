@@ -1,13 +1,11 @@
 package org.academiadecodigo.vim4cache.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -15,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.Character;
+import org.academiadecodigo.vim4cache.gameObjects.Player;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
@@ -33,9 +31,8 @@ public class PlayScreen implements Screen{
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
-
+private Player player;
     private Box2DDebugRenderer b2rd;
-    private Character player;
     private World world;
     private Hud hud;
 
@@ -52,8 +49,8 @@ public class PlayScreen implements Screen{
 
         renderer = new OrthogonalTiledMapRenderer(map);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
-        player = new Character(world, this);
-        b2rd = new Box2DDebugRenderer();
+        player = new Player();
+
 
 
     }
@@ -76,9 +73,9 @@ public class PlayScreen implements Screen{
 
         caGame.batch.begin();
         player.draw(caGame.batch);
-        caGame.batch.end();
+       // caGame.batch.end();
 
-        caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
     }
@@ -115,8 +112,7 @@ public class PlayScreen implements Screen{
 
         world.step(1/60f, 6 ,2);
 
-        player.update(dt);
-        gameCam.position.x = player.getB2body().getPosition().x;
+
 
         gameCam.update();
         renderer.setView(gameCam);
