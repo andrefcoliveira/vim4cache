@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.Character;
+import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
@@ -37,9 +38,11 @@ public class PlayScreen implements Screen{
     private Character player;
     private World world;
     private Hud hud;
+    private TextureAtlas atlas;
 
     public PlayScreen(CaGame caGame) {
 
+        atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(VariablesUtil.V_WIDTH/2, VariablesUtil.V_HEIGHT/2, gameCam);
@@ -57,7 +60,6 @@ public class PlayScreen implements Screen{
         player = new Character(world);
 
         new B2WorldCreator(world,map);
-
     }
 
     @Override
@@ -84,14 +86,12 @@ public class PlayScreen implements Screen{
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
     }
 
     @Override
     public void resize(int width, int height) {
 
         gamePort.update(width,height);
-
     }
 
     @Override
@@ -116,11 +116,10 @@ public class PlayScreen implements Screen{
         renderer.dispose();
         world.dispose();
         b2rd.dispose();
-
-
     }
 
-    public void update(float dt){
+    public void update(float dt) {
+
         handleInput();
 
         player.update(dt);
@@ -129,7 +128,6 @@ public class PlayScreen implements Screen{
 
         gameCam.update();
         renderer.setView(gameCam);
-
     }
 
     private void handleInput() {
@@ -149,8 +147,13 @@ public class PlayScreen implements Screen{
         if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
             player.getB2body().applyLinearImpulse(new Vector2(0, -20), player.getB2body().getWorldCenter(), true);
         }
-
     }
 
+    public World getWorld() {
+        return world;
+    }
 
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
 }
