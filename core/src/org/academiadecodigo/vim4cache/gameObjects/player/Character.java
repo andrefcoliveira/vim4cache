@@ -1,6 +1,8 @@
 package org.academiadecodigo.vim4cache.gameObjects.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -179,6 +181,8 @@ public class Character extends Sprite {
         }
         if (playScreen.isPunching() == true) {
             movingRight = true;
+            Music music = Gdx.audio.newMusic(Gdx.files.internal("punchSound.wav"));
+            music.play();
             return State.PUNCH;
         }
 

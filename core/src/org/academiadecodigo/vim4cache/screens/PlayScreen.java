@@ -3,6 +3,8 @@ package org.academiadecodigo.vim4cache.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -51,6 +53,8 @@ public class PlayScreen implements Screen{
     private TextureAtlas enemyAtlas;
     private Texture menuEnd;
 
+    private Music music;
+
     public PlayScreen(CaGame caGame) {
 
         atlas = new TextureAtlas("characterAnimations.pack");
@@ -65,6 +69,11 @@ public class PlayScreen implements Screen{
 
         renderer = new OrthogonalTiledMapRenderer(map);
         gameCam.position.set(gamePort.getWorldWidth() / VariablesUtil.PPM, gamePort.getWorldHeight() / VariablesUtil.PPM, 0);
+
+        // The sounds are to heavy for the library
+        //music = Gdx.audio.newMusic(Gdx.files.internal("startGame.wav"));
+        //music.play();
+        //music.dispose();
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();

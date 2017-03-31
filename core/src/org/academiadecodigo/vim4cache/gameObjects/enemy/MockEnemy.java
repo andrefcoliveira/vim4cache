@@ -167,7 +167,6 @@ public class MockEnemy extends Sprite {
         return ((this.getX() + 20) == character.getX() || (this.getX() - 20) == character.getX() ) && playScreen.isPunching();
     }
 
-
     public void hitByEnemy(MockEnemy enemy) {
 
     }
