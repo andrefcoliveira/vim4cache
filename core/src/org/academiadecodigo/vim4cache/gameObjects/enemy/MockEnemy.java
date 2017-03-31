@@ -44,7 +44,7 @@ public class MockEnemy extends Sprite {
         enemyStand = new TextureRegion(getTexture(), 0, 0, 17, 40);
         setBounds(0, 0, 60, 100);
         setRegion(enemyStand);
-        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 200 / VariablesUtil.PPM);
+        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
 
         stateTime = 0;
         runningRight = true;
@@ -100,8 +100,6 @@ public class MockEnemy extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / VariablesUtil.PPM);
-        fixtureDef.filter.categoryBits = VariablesUtil.ENEMY_BIT;
-        fixtureDef.filter.maskBits = VariablesUtil.CHARACTER_BIT;
 
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
@@ -166,13 +164,6 @@ public class MockEnemy extends Sprite {
         return EnemyState.STANDING;
     }
 
-    public void onHit(Character character) {
-        if (this.getX() == character.getX() && playScreen.isPunching()) {
-            playScreen.getEnemyAtlas().dispose();
-        }
-    }
-
-
     public void hitByEnemy(MockEnemy enemy) {
 
     }
@@ -180,16 +171,18 @@ public class MockEnemy extends Sprite {
     // Awesome randomness with the enemies velocity
     public Vector2 chase(float charX, float charY) {
 
-        if (charX > this.getBoundingRectangle().getX()) {
+        if (charX > this.getBoundingRectangle().getX() && charY > this.getBoundingRectangle().getY()) {
 
-            return velocity = new Vector2((charX / 20), (charY / 20));
+            return velocity = new Vector2((charX / 25), (charY / 15));
 
+        } else if (charX < this.getBoundingRectangle().getX() && charY < this.getBoundingRectangle().getY()) {
 
+            return velocity = new Vector2((-charX / 25), (-charY / 15));
+
+        } else if (charX < this.getBoundingRectangle().getX() && charY > this.getBoundingRectangle().getY()) {
+            return velocity = new Vector2((-charX / 25), (charY / 15));
         } else {
-
-            return velocity = new Vector2((-charX / 20), (-charY / 20));
-
-
+            return velocity = new Vector2((charX / 25), (-charY / 15));
         }
     }
 
