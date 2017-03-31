@@ -22,6 +22,7 @@ public class MockEnemy extends Sprite {
     private final World world;
     private float stateTime;
     private Array<TextureRegion> frames;
+    private Fixture fixture;
     private TextureRegion enemyStand;
     private Body b2Body;
     private Vector2 velocity;
@@ -196,9 +197,4 @@ public class MockEnemy extends Sprite {
         }
     }
 
-    public void setCategoryFilter(short filterBit){
-        Filter filter = new Filter();
-        filter.categoryBits = filterBit;
-        fixture.setUserData(this);
-    }
 }

@@ -5,13 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
@@ -37,6 +37,7 @@ public class PlayScreen implements Screen{
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private Box2DDebugRenderer b2rd;
+    private Days days;
 
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
@@ -45,6 +46,7 @@ public class PlayScreen implements Screen{
     private Hud hud;
     private TextureAtlas atlas;
     private TextureAtlas enemyAtlas;
+    private Texture menuEnd;
 
     public PlayScreen(CaGame caGame) {
 
@@ -135,7 +137,7 @@ public class PlayScreen implements Screen{
     public void update(float dt) {
 
         handleInput();
-
+        collisionListener();
         player.update(dt);
         hud.update(dt);
         world.step(1 / 60f, 6, 2);
@@ -174,6 +176,59 @@ public class PlayScreen implements Screen{
             player.getB2body().applyLinearImpulse(new Vector2(0, -40), player.getB2body().getWorldCenter(), true);
         }
 
+
+    }
+
+    private void collisionListener(){
+
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                Fixture fixA = contact.getFixtureA();
+                Fixture fixB = contact.getFixtureB();
+
+                if(fixA.getUserData() == null || fixB.getUserData() == null){
+                    return;
+                }
+
+                if (fixA.getUserData().equals("player") && fixB.getUserData().equals("door") ||
+                        fixA.getUserData().equals("door") && fixB.getUserData().equals("player")) {
+                        caGame.setLevel(caGame.getLevel()+1);
+                        days = new Days(caGame);
+                        days.setLevel(caGame.getLevel());
+                        caGame.setScreen(days);
+
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                if (fixA.getUserData().equals("player") && fixB.getUserData().equals("enemy") || fixA.getUserData().equals("enemy") && fixB.getUserData().equals("player")) {
+
+                }
+
+            }
+
+            @Override
+            public   void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
+
+        caGame.setScreen(this);
 
     }
 

@@ -19,7 +19,7 @@ public class FinalDoor extends InteractiveObjects {
 
     public FinalDoor(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
-        setCategoryFilter(VariablesUtil.OBJECT_BIT);
+        fixture.setUserData("door");
 
     }
 
