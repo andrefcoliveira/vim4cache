@@ -95,13 +95,11 @@ public class PlayScreen implements Screen{
         caGame.batch.begin();
         player.draw(caGame.batch);
         enemy.draw(caGame.batch);
+        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
         caGame.batch.end();
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
-        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
-
     }
 
     @Override
@@ -143,7 +141,7 @@ public class PlayScreen implements Screen{
         world.step(1 / 60f, 6, 2);
         enemy.update();
         world.step(1 / 60f, 6, 2);
-        gameCam.position.x = player.getB2body().getPosition().x; // posição inicial
+        gameCam.position.x = player.getB2body().getPosition().x; // Initial position
 
         gameCam.update();
         renderer.setView(gameCam);
