@@ -206,8 +206,10 @@ public class Character extends Sprite {
         b2body.createFixture(fixtureDef);
 
         EdgeShape frontSensor = new EdgeShape();
-        frontSensor.set(new Vector2(-2/VariablesUtil.PPM,5/VariablesUtil.PPM) , new Vector2(2/VariablesUtil.PPM, 5/VariablesUtil.PPM));
+        frontSensor.set(new Vector2(-30,40) , new Vector2(30,-40));
         fixtureDef.shape= frontSensor;
+
+        b2body.createFixture(fixtureDef).setUserData("player");
 
 
     }

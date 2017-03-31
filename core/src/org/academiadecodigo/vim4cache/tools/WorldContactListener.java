@@ -1,6 +1,7 @@
 package org.academiadecodigo.vim4cache.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
+import org.academiadecodigo.vim4cache.gameObjects.InteractiveObjects;
 
 /**
  * Created by apm on 31-03-2017.
@@ -13,6 +14,7 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
 
 
+        System.out.println(fixB.getUserData() + "  " + fixA.getUserData());
     }
 
     @Override

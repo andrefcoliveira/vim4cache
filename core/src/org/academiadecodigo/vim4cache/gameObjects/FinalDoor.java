@@ -1,5 +1,6 @@
 package org.academiadecodigo.vim4cache.gameObjects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,6 +25,6 @@ public class FinalDoor extends InteractiveObjects {
 
     @Override
     public void onHit() {
-
+        Gdx.app.log("Coin", "Collision");
     }
 }

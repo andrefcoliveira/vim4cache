@@ -57,16 +57,15 @@ public class MockEnemy extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / VariablesUtil.PPM);
-        fixtureDef.filter.categoryBits = VariablesUtil.ENEMY_BIT;
-        fixtureDef.filter.maskBits = VariablesUtil.GROUND_BIT |
+        //fixtureDef.filter.categoryBits = VariablesUtil.ENEMY_BIT;
+        /*fixtureDef.filter.maskBits = VariablesUtil.GROUND_BIT |
                 VariablesUtil.ENEMY_BIT |
-                VariablesUtil.OBJECT_BIT |
-                VariablesUtil.CHARACTER_BIT;
+                VariablesUtil.OBJECT_BIT | VariablesUtil.CHARACTER_BIT;*/
 
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
 
-        b2Body.createFixture(fixtureDef);
+        b2Body.createFixture(fixtureDef).setUserData("enemy");
         b2Body.setActive(true);
     }
 
