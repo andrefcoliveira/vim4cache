@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.Character;
+import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
@@ -44,14 +44,14 @@ public class PlayScreen implements Screen{
 
     public PlayScreen(CaGame caGame) {
 
-        atlas = new TextureAtlas("characterAnimations.pack");
+        atlas = new TextureAtlas("/Users/codecadet/Desktop/vim4cache/core/assets/characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(VariablesUtil.V_WIDTH/2, VariablesUtil.V_HEIGHT/2, gameCam);
         hud = new Hud(caGame.batch);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level1.tmx"); // tmx file
+        map = mapLoader.load("/Users/codecadet/Desktop/vim4cache/core/assets/level1.tmx"); // tmx file
 
         renderer = new OrthogonalTiledMapRenderer(map);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
@@ -89,6 +89,8 @@ public class PlayScreen implements Screen{
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
+        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
     }
 
     @Override
@@ -126,6 +128,7 @@ public class PlayScreen implements Screen{
         handleInput();
 
         player.update(dt);
+        enemy.update();
         world.step(1/60f, 6 ,2);
         gameCam.position.x = player.getB2body().getPosition().x; // posição inicial
 
