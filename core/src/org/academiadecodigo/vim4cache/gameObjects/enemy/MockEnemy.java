@@ -15,6 +15,7 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
  * Created by codecadet on 30/03/17.
  */
 public class MockEnemy extends Sprite {
+
     public enum EnemyState {STANDING, UP, DOWN, LEFT, RIGHT,}
 
     public EnemyState currentState;
@@ -31,7 +32,6 @@ public class MockEnemy extends Sprite {
     private Animation enemyRight;
     private Animation enemyLeft;
     private boolean runningRight;
-
 
     // Awesome randomness with the initial position of the enemies
     public MockEnemy(World world, PlayScreen screen) {
@@ -168,10 +168,8 @@ public class MockEnemy extends Sprite {
         return EnemyState.STANDING;
     }
 
-    public void onHit(Character character) {
-        if (this.getX() == character.getX() && playScreen.isPunching()) {
-            playScreen.getEnemyAtlas().dispose();
-        }
+    public boolean onHit(Character character) {
+        return ((this.getX() + 20) == character.getX() || (this.getX() - 20) == character.getX() ) && playScreen.isPunching();
     }
 
 

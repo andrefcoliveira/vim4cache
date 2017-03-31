@@ -116,18 +116,22 @@ public class PlayScreen implements Screen{
         caGame.batch.begin();
 
         player.draw(caGame.batch);
-        enemy.draw(caGame.batch);
-        enemy1.draw(caGame.batch);
-        enemy2.draw(caGame.batch);
-        enemy3.draw(caGame.batch);
-        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
-        enemy1.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
-        enemy2.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
-        enemy3.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
-        enemy.onHit(player);
-        enemy1.onHit(player);
-        enemy2.onHit(player);
-        enemy3.onHit(player);
+
+            enemy.draw(caGame.batch);
+            enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+            enemy.onHit(player);
+
+            enemy1.draw(caGame.batch);
+            enemy1.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+            enemy1.onHit(player);
+
+            enemy2.draw(caGame.batch);
+            enemy2.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+            enemy2.onHit(player);
+
+            enemy3.draw(caGame.batch);
+            enemy3.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+            enemy3.onHit(player);
 
         caGame.batch.end();
 
