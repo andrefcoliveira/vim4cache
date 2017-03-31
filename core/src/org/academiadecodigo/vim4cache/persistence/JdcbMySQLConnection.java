@@ -110,8 +110,7 @@ public class JdcbMySQLConnection {
             if (resultSet.next()) {
                 String usernameValue = resultSet.getString("name");
                 int scoreValue = resultSet.getInt("score");
-                int id = resultSet.getInt("id");
-                User user = new User(usernameValue, scoreValue, id);
+                User user = new User(usernameValue, scoreValue);
                 connection.commit();
                 return user;
             }
