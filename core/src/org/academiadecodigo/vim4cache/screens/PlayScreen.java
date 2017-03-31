@@ -153,22 +153,22 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             punching = false;
-            player.getB2body().applyLinearImpulse(new Vector2(20, 0), player.getB2body().getWorldCenter(), true);
+            player.getB2body().applyLinearImpulse(new Vector2(40, 0), player.getB2body().getWorldCenter(), true);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             punching = false;
-            player.getB2body().applyLinearImpulse(new Vector2(-20, 0), player.getB2body().getWorldCenter(), true);
+            player.getB2body().applyLinearImpulse(new Vector2(-40, 0), player.getB2body().getWorldCenter(), true);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             punching = false;
-            player.getB2body().applyLinearImpulse(new Vector2(0, 20), player.getB2body().getWorldCenter(), true);
+            player.getB2body().applyLinearImpulse(new Vector2(0, 40), player.getB2body().getWorldCenter(), true);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             punching = false;
-            player.getB2body().applyLinearImpulse(new Vector2(0, -20), player.getB2body().getWorldCenter(), true);
+            player.getB2body().applyLinearImpulse(new Vector2(0, -40), player.getB2body().getWorldCenter(), true);
         }
 
 

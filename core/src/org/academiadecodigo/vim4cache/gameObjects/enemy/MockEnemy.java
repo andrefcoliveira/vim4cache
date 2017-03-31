@@ -50,7 +50,7 @@ public class MockEnemy extends Sprite {
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set(250 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -90,14 +90,14 @@ public class MockEnemy extends Sprite {
     // Awesome randomness with the enemies velocity
     public Vector2 chase(float charX, float charY) {
 
-        if (charX < this.getBoundingRectangle().getX()) {
+        if (charX > this.getBoundingRectangle().getX()) {
 
-            return velocity = new Vector2((charX /  3), (charY / 3));
+            return velocity = new Vector2((charX /  10), (charY / 10));
 
 
         } else {
 
-            return velocity = new Vector2((-charX / 4),(charY / 4));
+            return velocity = new Vector2((-charX / 10),(-charY / 10));
 
 
         }
