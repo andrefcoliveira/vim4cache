@@ -36,13 +36,14 @@ public class PlayScreen implements Screen{
 
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
+    private AbstractMockEnemy enemy;
     private World world;
     private Hud hud;
     private TextureAtlas atlas;
 
     public PlayScreen(CaGame caGame) {
 
-        //atlas = new TextureAtlas("characterAnimations.pack");
+        atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(VariablesUtil.V_WIDTH/2, VariablesUtil.V_HEIGHT/2, gameCam);
@@ -57,7 +58,8 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
 
-        player = new Character(world);
+        player = new Character(world, this);
+        enemy = new MockEnemy(world, this);
 
         new B2WorldCreator(world,map);
     }
