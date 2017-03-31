@@ -26,10 +26,9 @@ public abstract class AbstractMockEnemy extends Sprite {
     public AbstractMockEnemy() {
     }
 
-    public AbstractMockEnemy(World world, PlayScreen screen) {
+    public AbstractMockEnemy(World world) {
 
         this.world = world;
-        this.screen = screen;
         defineEnemy();
         velocity = new Vector2(0, 0);
     }

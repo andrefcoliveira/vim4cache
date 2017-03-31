@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.Character;
+import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
@@ -44,10 +44,12 @@ public class PlayScreen implements Screen{
     private World world;
     private Hud hud;
     private TextureAtlas atlas;
+    private TextureAtlas enemyAtlas;
 
     public PlayScreen(CaGame caGame) {
 
         atlas = new TextureAtlas("characterAnimations.pack");
+        enemyAtlas = new TextureAtlas("Enemies.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(VariablesUtil.V_WIDTH / VariablesUtil.PPM, VariablesUtil.V_HEIGHT / VariablesUtil.PPM, gameCam);
@@ -92,6 +94,7 @@ public class PlayScreen implements Screen{
         caGame.batch.setProjectionMatrix(gameCam.combined);
         caGame.batch.begin();
         player.draw(caGame.batch);
+        enemy.draw(caGame.batch);
         caGame.batch.end();
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -183,6 +186,10 @@ public class PlayScreen implements Screen{
 
     public TextureAtlas getAtlas() {
         return atlas;
+    }
+
+    public TextureAtlas getEnemyAtlas() {
+        return enemyAtlas;
     }
 
     public boolean isPunching() {
