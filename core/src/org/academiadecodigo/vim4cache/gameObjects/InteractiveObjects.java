@@ -38,4 +38,10 @@ public abstract class InteractiveObjects {
     }
 
     public abstract void onHit();
+
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setUserData(this);
+    }
 }

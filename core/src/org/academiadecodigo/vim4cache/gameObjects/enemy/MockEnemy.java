@@ -14,12 +14,14 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
  * Created by codecadet on 30/03/17.
  */
 public class MockEnemy extends Sprite {
+
     public enum State {STANDING, UP, DOWN, LEFT, RIGHT, PUNCH}
 
     private final World world;
     private float stateTime;
     private Array<TextureRegion> frames;
     private TextureRegion enemyStand;
+    private Fixture fixture;
     private Body b2Body;
     private Vector2 velocity;
     private PlayScreen playScreen;
@@ -103,7 +105,8 @@ public class MockEnemy extends Sprite {
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
 
-        b2Body.createFixture(fixtureDef).setUserData("enemy");
+        fixture = b2Body.createFixture(fixtureDef);
+        setCategoryFilter(VariablesUtil.ENEMY_BIT);
         b2Body.setActive(true);
     }
 
@@ -115,7 +118,8 @@ public class MockEnemy extends Sprite {
     }
 
 
-    public void onHit(Character character) {
+    public void onHit() {
+
 
     }
 
@@ -138,5 +142,11 @@ public class MockEnemy extends Sprite {
 
 
         }
+    }
+
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setUserData(this);
     }
 }
