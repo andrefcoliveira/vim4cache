@@ -228,8 +228,6 @@ public class PlayScreen implements Screen{
                         caGame.setLevel(caGame.getLevel()+1);
                         days = new Days(caGame);
                         days.setLevel(caGame.getLevel());
-
-
                 }
 
                 if (fixA.getUserData().equals("player") && fixB.getUserData().equals("enemy") || fixA.getUserData().equals("enemy") && fixB.getUserData().equals("player")) {
