@@ -30,6 +30,7 @@ public class PlayScreen implements Screen{
     private CaGame caGame;
     private boolean debug = false;
     private boolean punching = false;
+    private boolean dayScreen=false;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -88,6 +89,19 @@ public class PlayScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
+
+        if(dayScreen){
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            caGame.setScreen(new PlayScreen(caGame));
+            dayScreen=false;
+        }
+
 
         if (debug) {
             b2rd.render(world, gameCam.combined);
@@ -197,12 +211,8 @@ public class PlayScreen implements Screen{
                         days = new Days(caGame);
                         days.setLevel(caGame.getLevel());
                         caGame.setScreen(days);
-
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        dayScreen = true;
+                    System.out.println("oix");
 
                 }
 
@@ -227,8 +237,6 @@ public class PlayScreen implements Screen{
 
             }
         });
-
-        caGame.setScreen(this);
 
     }
 
