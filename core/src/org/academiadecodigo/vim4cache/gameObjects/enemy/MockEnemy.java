@@ -81,7 +81,7 @@ public class MockEnemy extends Sprite {
     public void moveLeftAnimation() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 5; i++)
-            frames.add(new TextureRegion(getTexture(), i * 40, 0, 17, 40));
+            frames.add(new TextureRegion(getTexture(), i * 17, 0, 17, 40));
         enemyLeft = new Animation(0.2f, frames);
         frames.clear();
     }
@@ -182,12 +182,12 @@ public class MockEnemy extends Sprite {
 
         if (charX > this.getBoundingRectangle().getX()) {
 
-            return velocity = new Vector2((charX / 10), (charY / 10));
+            return velocity = new Vector2((charX / 20), (charY / 20));
 
 
         } else {
 
-            return velocity = new Vector2((-charX / 10), (-charY / 10));
+            return velocity = new Vector2((-charX / 20), (-charY / 20));
 
 
         }
