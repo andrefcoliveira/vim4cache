@@ -31,7 +31,6 @@ public class MockEnemy extends Sprite {
     private Animation enemyLeft;
     private boolean runningRight;
 
-
     // Awesome randomness with the initial position of the enemies
     public MockEnemy(World world, PlayScreen screen) {
         super(screen.getEnemyAtlas().findRegion("enemy)"));
@@ -40,10 +39,10 @@ public class MockEnemy extends Sprite {
         velocity = new Vector2((int) (Math.random() * 100), (int) (Math.random() * 100));
 
         defineEnemy();
-        enemyStand = new TextureRegion(getTexture(), 0, 0, 17, 40);
+        enemyStand = new TextureRegion(getTexture(), 10, 10, 17, 40);
         setBounds(0, 0, 60, 100);
         setRegion(enemyStand);
-        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
+        setBounds((int) Math.random() * 100, (int) Math.random() * 100, 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
 
         stateTime = 0;
         runningRight = true;
@@ -51,7 +50,6 @@ public class MockEnemy extends Sprite {
         moveDownAnimation();
         moveLeftAnimation();
         moveRightAnimation();
-
     }
 
     public void moveUpAnimation() {
@@ -86,11 +84,10 @@ public class MockEnemy extends Sprite {
         frames.clear();
     }
 
-
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set((int) Math.random() * 300 / VariablesUtil.PPM, (int) Math.random() * 300 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -145,7 +142,6 @@ public class MockEnemy extends Sprite {
         stateTime = currentState == previousState ? stateTime + delta : 0;
         previousState = currentState;
         return region;
-
     }
 
     public EnemyState getState() {
@@ -165,30 +161,24 @@ public class MockEnemy extends Sprite {
         return EnemyState.STANDING;
     }
 
-
-
     public void onHit(Character character) {
 
     }
-
 
     public void hitByEnemy(MockEnemy enemy) {
 
     }
 
-    // Awesome randomness with the enemies velocity
+    // Soon to be an awesome randomness with the enemies velocity
     public Vector2 chase(float charX, float charY) {
 
         if (charX > this.getBoundingRectangle().getX()) {
 
-            return velocity = new Vector2((charX / 20), (charY / 20));
-
+            return velocity = new Vector2((charX / 30), (charY / 30));
 
         } else {
 
-            return velocity = new Vector2((-charX / 20), (-charY / 20));
-
-
+            return velocity = new Vector2((-charX / 30), (-charY / 30));
         }
     }
 }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import javafx.scene.input.MouseEvent;
 import org.academiadecodigo.vim4cache.CaGame;
 import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
@@ -41,6 +42,7 @@ public class PlayScreen implements Screen{
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
     private MockEnemy enemy;
+    private MockEnemy enemy1;
     private World world;
     private Hud hud;
     private TextureAtlas atlas;
@@ -66,6 +68,7 @@ public class PlayScreen implements Screen{
 
         player = new Character(world, this);
         enemy = new MockEnemy(world, this);
+        enemy1 = new MockEnemy(world, this);
 
         new B2WorldCreator(world, map);
 
@@ -93,9 +96,13 @@ public class PlayScreen implements Screen{
 
         caGame.batch.setProjectionMatrix(gameCam.combined);
         caGame.batch.begin();
+
         player.draw(caGame.batch);
         enemy.draw(caGame.batch);
+        enemy1.draw(caGame.batch);
         enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy1.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+
         caGame.batch.end();
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -140,6 +147,7 @@ public class PlayScreen implements Screen{
         hud.update(dt);
         world.step(1 / 60f, 6, 2);
         enemy.update(dt);
+        enemy1.update(dt);
         world.step(1 / 60f, 6, 2);
         gameCam.position.x = player.getB2body().getPosition().x; // Initial position
 
@@ -173,8 +181,6 @@ public class PlayScreen implements Screen{
             punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, -40), player.getB2body().getWorldCenter(), true);
         }
-
-
     }
 
     public World getWorld() {
