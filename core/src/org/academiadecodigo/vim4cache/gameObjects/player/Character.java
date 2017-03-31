@@ -12,7 +12,7 @@ import org.academiadecodigo.vim4cache.screens.PlayScreen;
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite {
-    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, LEFTPUNCH, RIGHTPUNCH}
+    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, RIGHTPUNCH}
 
     ;
     public State currentState;
@@ -21,13 +21,10 @@ public class Character extends Sprite {
     private World world;
     private Screen screen;
     private Body b2body;
-    private Animation characterUp;
-    private Animation characterDown;
     private Animation characterRight;
     private Animation characterLeft;
     private TextureRegion characterStanding;
-    private Animation punchRight;
-    private Animation punchLeft;
+    private Animation characterPunch;
     private Animation jump;
     private float stateTimer;
     private boolean runningRight;
@@ -44,14 +41,36 @@ public class Character extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-        Array<TextureRegion> frames = new Array<>();
-        for (int i = 8; i < 12; i++)
-            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterRight = new Animation(0, 2f, frames);
-        frames.clear();
+        moveRightAnimation();
+        moveLeftAnimation();
+        attackAnimation();
+
 
     }
 
+    public void moveRightAnimation(){
+        Array<TextureRegion> frames = new Array<>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterRight = new Animation( 0.3f, frames);
+        frames.clear();
+    }
+
+    public void moveLeftAnimation(){
+        Array<TextureRegion> frames = new Array<>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterLeft = new Animation( 0.3f, frames);
+        frames.clear();
+    }
+
+    public void attackAnimation(){
+        Array<TextureRegion> frames = new Array<>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterPunch = new Animation( 0.3f, frames);
+        frames.clear();
+    }
     public void update(float delta) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
@@ -61,18 +80,13 @@ public class Character extends Sprite {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
-           /* case RIGHT:
+            case RIGHT:
                 region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
                 break;
             case LEFT:
-                region = characterLeft.getKeyFrame(stateTimer, true);
+                region = (TextureRegion) characterLeft.getKeyFrame(stateTimer, true);
                 break;
-            case UP:
-                region = characterUp.getKeyFrame(stateTimer, true);
-                break;
-            case DOWN:
-                region = characterDown.getKeyFrame(stateTimer, true);
-                break;*/
+
             case STANDING:
             default:
                 region = characterStanding;
