@@ -5,13 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
+import com.sun.scenario.effect.impl.prism.PrImage;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
+import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite{
-
+    public enum State { STANDING, UP, DOWN, LEFT, RIGHT, LEFTPUNCH, RIGHTPUNCH };
+    public  State currentState;
+    public State previousState;
     private int health;
     private World world;
     private Screen screen;
@@ -23,15 +27,22 @@ public class Character extends Sprite{
     private Animation punchRight;
     private Animation punchLeft;
     private Animation jump;
+    private float stateTimer;
+    private boolean runningRight;
 
 
 
     public Character(World world, PlayScreen playScreen) {
-       // super(playScreen.getAtlas().findRegion(""));
+        super(playScreen.getAtlas().findRegion("player"));
         this.world = world;
-        this.screen = screen;
         defineCharacter();
-        //characterDown = new TextureRegion(getTexture(),);
+        characterRight = new TextureRegion(getTexture(), 312, 0, 40, 70);
+        setBounds(0, 0, 60, 100 );
+        setRegion(characterRight);
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+        stateTimer = 0;
+        runningRight = true;
     }
 
     public void update(float delta) {

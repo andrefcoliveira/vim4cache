@@ -80,9 +80,9 @@ public class PlayScreen implements Screen{
         b2rd.render(world,gameCam.combined);
 
         caGame.batch.setProjectionMatrix(gameCam.combined);
-       /* caGame.batch.begin();
+        caGame.batch.begin();
         player.draw(caGame.batch);
-        caGame.batch.end();*/
+        caGame.batch.end();
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
