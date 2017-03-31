@@ -86,9 +86,21 @@ public class Hud {
         if (timeCount >= 1) {
             time--;
             score++;
+            health--;
+
             countLabel.setText(String.format("%02d", time));
             scoreLabel.setText(String.format("%05d", score));
+            healthLabel.setText(String.format("%03d", health));
+
             timeCount = 0;
         }
+    }
+
+    public Integer getHealth() {
+        return health;
+    }
+
+    public Integer getScore() {
+        return score;
     }
 }
