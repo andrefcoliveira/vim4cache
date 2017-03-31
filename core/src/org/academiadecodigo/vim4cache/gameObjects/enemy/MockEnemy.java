@@ -1,34 +1,34 @@
 package org.academiadecodigo.vim4cache.gameObjects.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
-
 /**
  * Created by codecadet on 30/03/17.
  */
-public class MockEnemy extends AbstractMockEnemy {
+public class MockEnemy extends Sprite {
+    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, PUNCH}
 
-    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, LEFTPUNCH, RIGHTPUNCH}
-
+    private final World world;
     private float stateTime;
-
     private Array<TextureRegion> frames;
-
     private TextureRegion enemyStand;
+    private Body b2Body;
+    private Vector2 velocity;
+    private PlayScreen playScreen;
 
+    // Awesome randomness with the initial position of the enemies
     public MockEnemy(World world, PlayScreen screen) {
-        super(world);
-        screen.getAtlas().findRegion("enemy");
+        super(screen.getEnemyAtlas().findRegion("enemy)"));
+        this.playScreen = screen;
+        this.world = world;
+        velocity = new Vector2((int) (Math.random() * 100), (int) (Math.random() * 100));
         frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(new Texture("coisa.png")));
         for (int i = 0; i < 2; i++) {
@@ -36,6 +36,7 @@ public class MockEnemy extends AbstractMockEnemy {
 
         }
 
+        defineEnemy();
         enemyStand = new TextureRegion(getTexture(), 23, 0, 23, 35);
         setBounds(0, 0, 23 / VariablesUtil.PPM, 35 / VariablesUtil.PPM);
         setRegion(enemyStand);
@@ -46,7 +47,6 @@ public class MockEnemy extends AbstractMockEnemy {
 
     }
 
-    @Override
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
@@ -69,7 +69,6 @@ public class MockEnemy extends AbstractMockEnemy {
         b2Body.setActive(true);
     }
 
-    @Override
     public void update() {
         b2Body.setLinearVelocity(velocity);
 
@@ -77,25 +76,28 @@ public class MockEnemy extends AbstractMockEnemy {
         //setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
 
-    @Override
+
     public void onHit(Character character) {
 
     }
 
-    @Override
+
     public void hitByEnemy(AbstractMockEnemy enemy) {
 
     }
 
+    // Awesome randomness with the enemies velocity
     public Vector2 chase(float charX, float charY) {
 
         if (charX < this.getBoundingRectangle().getX()) {
-            System.out.println("bola à direita");
-            return velocity = new Vector2(charX / 3, charY / 3);
+
+            return velocity = new Vector2((charX / (int) (Math.random() * 4)),
+                    (charY / (int) (Math.random() * 4)));
 
         } else {
-            System.out.println("bola à esquerda");
-            return velocity = new Vector2(-charX / 3, charY / 3);
+
+            return velocity = new Vector2((-charX / (int) (Math.random() * 4)),
+                    (charY / (int) (Math.random() * 4)));
         }
     }
 }
