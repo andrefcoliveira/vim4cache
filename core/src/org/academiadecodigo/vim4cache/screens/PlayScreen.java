@@ -15,10 +15,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.player.Character;
+import org.academiadecodigo.vim4cache.gameObjects.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
+import org.academiadecodigo.vim4cache.tools.WorldContactListener;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
@@ -49,14 +50,14 @@ public class PlayScreen implements Screen{
         atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(VariablesUtil.V_WIDTH/VariablesUtil.PPM, VariablesUtil.V_HEIGHT/VariablesUtil.PPM, gameCam);
+        gamePort = new FitViewport(VariablesUtil.V_WIDTH / VariablesUtil.PPM, VariablesUtil.V_HEIGHT / VariablesUtil.PPM, gameCam);
         hud = new Hud(caGame.batch);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("level1.tmx"); // tmx file
 
         renderer = new OrthogonalTiledMapRenderer(map);
-        gameCam.position.set(gamePort.getWorldWidth()/VariablesUtil.PPM, gamePort.getWorldHeight()/VariablesUtil.PPM,0);
+        gameCam.position.set(gamePort.getWorldWidth() / VariablesUtil.PPM, gamePort.getWorldHeight() / VariablesUtil.PPM, 0);
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
@@ -64,7 +65,9 @@ public class PlayScreen implements Screen{
         player = new Character(world, this);
         enemy = new MockEnemy(world, this);
 
-        new B2WorldCreator(world,map);
+        new B2WorldCreator(world, map);
+
+        world.setContactListener(new WorldContactListener());
     }
 
     @Override
@@ -82,7 +85,7 @@ public class PlayScreen implements Screen{
 
         renderer.render();
 
-        if(debug) {
+        if (debug) {
             b2rd.render(world, gameCam.combined);
         }
 
@@ -101,7 +104,7 @@ public class PlayScreen implements Screen{
     @Override
     public void resize(int width, int height) {
 
-        gamePort.update(width,height);
+        gamePort.update(width, height);
     }
 
     @Override
@@ -134,7 +137,7 @@ public class PlayScreen implements Screen{
 
         player.update(dt);
         hud.update(dt);
-        world.step(1/60f, 6 ,2);
+        world.step(1 / 60f, 6, 2);
         enemy.update();
         world.step(1 / 60f, 6, 2);
         gameCam.position.x = player.getB2body().getPosition().x; // posição inicial
@@ -170,6 +173,8 @@ public class PlayScreen implements Screen{
             punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, -20), player.getB2body().getWorldCenter(), true);
         }
+
+
     }
 
     public World getWorld() {
@@ -186,5 +191,9 @@ public class PlayScreen implements Screen{
 
     public void setPunching(boolean punching) {
         this.punching = punching;
+    }
+
+    public void stopCharacter() {
+        player.getB2body().setLinearVelocity(0, 0);
     }
 }

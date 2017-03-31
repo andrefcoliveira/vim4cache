@@ -39,7 +39,6 @@ public class MockEnemy extends AbstractMockEnemy {
 
         setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
 
-
     }
 
 
