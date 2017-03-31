@@ -38,7 +38,7 @@ public class PlayScreen implements Screen{
 
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
-    private AbstractMockEnemy enemy;
+    private MockEnemy enemy;
     private World world;
     private Hud hud;
     private TextureAtlas atlas;
@@ -60,7 +60,7 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
 
-        player = new Character(world,this);
+        player = new Character(world, this);
         enemy = new MockEnemy(world, this);
 
         new B2WorldCreator(world,map);
