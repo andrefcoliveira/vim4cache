@@ -3,6 +3,7 @@ package org.academiadecodigo.vim4cache;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.academiadecodigo.vim4cache.screens.Menu;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
 
 public class CaGame extends Game {
@@ -21,7 +22,7 @@ public class CaGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        setScreen(new PlayScreen(this));
+        setScreen(new Menu(this));
     }
 
     @Override

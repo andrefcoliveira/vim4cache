@@ -24,13 +24,13 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
 /**
  * Created by codecadet on 30/03/17.
  */
-public class PlayScreen implements Screen{
+public class PlayScreen implements Screen {
 
     private CaGame caGame;
     private boolean debug = false;
     private boolean punching = false;
-    private boolean dayScreen=false;
-    private boolean nextDay=false;
+    private boolean dayScreen = false;
+    private boolean nextDay = false;
     private boolean gameOver;
 
     private OrthographicCamera gameCam;
@@ -51,7 +51,6 @@ public class PlayScreen implements Screen{
     private Hud hud;
     private TextureAtlas atlas;
     private TextureAtlas enemyAtlas;
-    private Texture menuEnd;
     private int counter = 0;
 
     public PlayScreen(CaGame caGame) {
@@ -97,19 +96,6 @@ public class PlayScreen implements Screen{
 
         renderer.render();
 
-        if(dayScreen){
-
-            while(!nextDay){
-                if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-                    nextDay=true;
-                }
-            }
-
-            caGame.setScreen(new PlayScreen(caGame));
-            dayScreen=false;
-        }
-
-
         if (debug) {
             b2rd.render(world, gameCam.combined);
         }
@@ -119,20 +105,20 @@ public class PlayScreen implements Screen{
 
         player.draw(caGame.batch);
 
-            enemy.draw(caGame.batch);
-            enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy.draw(caGame.batch);
+        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
 
 
-            enemy1.draw(caGame.batch);
-            enemy1.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy1.draw(caGame.batch);
+        enemy1.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
 
 
-            enemy2.draw(caGame.batch);
-            enemy2.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy2.draw(caGame.batch);
+        enemy2.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
 
 
-            enemy3.draw(caGame.batch);
-            enemy3.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy3.draw(caGame.batch);
+        enemy3.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
 
 
         caGame.batch.end();
@@ -185,6 +171,11 @@ public class PlayScreen implements Screen{
         world.step(1 / 60f, 6, 2);
         gameCam.position.x = player.getB2body().getPosition().x; // Initial position
 
+        if (dayScreen) {
+
+            days.update(dt);
+        }
+
         gameCam.update();
         renderer.setView(gameCam);
     }
@@ -217,7 +208,7 @@ public class PlayScreen implements Screen{
         }
     }
 
-    private void collisionListener(){
+    private void collisionListener() {
 
         world.setContactListener(new ContactListener() {
 
@@ -230,26 +221,25 @@ public class PlayScreen implements Screen{
                 fixA = contact.getFixtureA();
                 fixB = contact.getFixtureB();
 
-                if(fixA.getUserData() == null || fixB.getUserData() == null){
+                if (fixA.getUserData() == null || fixB.getUserData() == null) {
                     return;
                 }
 
                 if (fixA.getUserData().equals("player") && fixB.getUserData().equals("door") ||
                         fixA.getUserData().equals("door") && fixB.getUserData().equals("player")) {
-                        caGame.setLevel(caGame.getLevel()+1);
-                        days = new Days(caGame);
-                        days.setLevel(caGame.getLevel());
-                        caGame.setScreen(days);
-                        dayScreen = true;
-                    System.out.println("oix");
+                    caGame.setLevel(caGame.getLevel() + 1);
+                    days = new Days(caGame);
+                    days.setLevel(caGame.getLevel());
+                    caGame.setScreen(days);
+                    dayScreen = true;
 
                 }
 
                 if (fixA.getUserData().equals("player") && fixB.getUserData().equals("enemy") || fixA.getUserData().equals("enemy") && fixB.getUserData().equals("player")) {
 
-                    if(counter == 4){
+                    if (counter == 4) {
                         caGame.setScreen(new EndScreen(caGame));
-                        gameOver=true;
+                        gameOver = true;
                     }
                     counter++;
                 }
@@ -257,7 +247,7 @@ public class PlayScreen implements Screen{
             }
 
             @Override
-            public   void endContact(Contact contact) {
+            public void endContact(Contact contact) {
 
             }
 
