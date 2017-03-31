@@ -1,6 +1,5 @@
 package org.academiadecodigo.vim4cache.gameObjects.enemy;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +14,7 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
  * Created by codecadet on 30/03/17.
  */
 public class MockEnemy extends Sprite {
-    public enum EnemyState {STANDING, UP, DOWN, LEFT, RIGHT, }
+    public enum EnemyState {STANDING, UP, DOWN, LEFT, RIGHT,}
 
     public EnemyState currentState;
     public EnemyState previousState;
@@ -41,10 +40,10 @@ public class MockEnemy extends Sprite {
         velocity = new Vector2((int) (Math.random() * 100), (int) (Math.random() * 100));
 
         defineEnemy();
-        enemyStand = new TextureRegion(getTexture(), 0, 0, 17, 40);
+        enemyStand = new TextureRegion(getTexture(), 10, 10, 17, 40);
         setBounds(0, 0, 60, 100);
         setRegion(enemyStand);
-        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
+        setBounds((int) Math.random() * 100, (int) Math.random() * 100, 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
 
         stateTime = 0;
         runningRight = true;
@@ -87,13 +86,10 @@ public class MockEnemy extends Sprite {
         frames.clear();
     }
 
-
-
-
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set((int) (Math.random() * 2000) / VariablesUtil.PPM, (int) ((Math.random() * 100) / VariablesUtil.PPM) + 50);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -148,7 +144,6 @@ public class MockEnemy extends Sprite {
         stateTime = currentState == previousState ? stateTime + delta : 0;
         previousState = currentState;
         return region;
-
     }
 
     public EnemyState getState() {
@@ -168,11 +163,10 @@ public class MockEnemy extends Sprite {
         return EnemyState.STANDING;
     }
 
-
-
-    public void onHit() {
-
-
+    public void onHit(Character character) {
+        if (this.getX() == character.getX() && playScreen.isPunching()) {
+            playScreen.getEnemyAtlas().dispose();
+        }
     }
 
 
@@ -196,7 +190,7 @@ public class MockEnemy extends Sprite {
         }
     }
 
-    public void setCategoryFilter(short filterBit){
+    public void setCategoryFilter(short filterBit) {
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
         //fixture.setUserData(this);

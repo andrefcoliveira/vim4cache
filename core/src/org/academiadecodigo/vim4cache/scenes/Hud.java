@@ -36,7 +36,7 @@ public class Hud {
         time = 120;
         timeCount = 0;
         health = 100;
-        score = 00000;
+        score = 0;
 
         viewPort = new FitViewport(VariablesUtil.V_WIDTH, VariablesUtil.V_HEIGHT, new OrthographicCamera());
 
