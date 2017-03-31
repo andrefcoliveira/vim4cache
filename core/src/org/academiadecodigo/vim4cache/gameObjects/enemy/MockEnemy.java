@@ -1,13 +1,11 @@
 package org.academiadecodigo.vim4cache.gameObjects.enemy;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
@@ -199,6 +197,6 @@ public class MockEnemy extends Sprite {
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
-        fixture.setUserData(this);
+        //fixture.setUserData(this);
     }
 }
