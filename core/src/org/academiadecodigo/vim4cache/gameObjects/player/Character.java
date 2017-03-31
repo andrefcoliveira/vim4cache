@@ -24,6 +24,7 @@ public class Character extends Sprite {
     private Animation characterUp;
     private Animation characterDown;
     private Animation characterRight;
+    private Animation characterLeft;
     private TextureRegion characterStanding;
     private Animation punchRight;
     private Animation punchLeft;
@@ -60,14 +61,14 @@ public class Character extends Sprite {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
-            case RIGHT:
-         /*       region =  characterRight.getKeyFrame(stateTimer, true);
+           /* case RIGHT:
+                region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
                 break;
             case LEFT:
                 region = characterLeft.getKeyFrame(stateTimer, true);
                 break;
             case UP:
-                region =  characterUp.getKeyFrame(stateTimer, true);
+                region = characterUp.getKeyFrame(stateTimer, true);
                 break;
             case DOWN:
                 region = characterDown.getKeyFrame(stateTimer, true);
@@ -76,11 +77,10 @@ public class Character extends Sprite {
             default:
                 region = characterStanding;
         }
-        if((b2body.getLinearVelocity().x <0 || !runningRight) && !region.isFlipX()){
+        if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        }
-        else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }

@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
 import org.academiadecodigo.vim4cache.gameObjects.Character;
-import org.academiadecodigo.vim4cache.gameObjects.enemy.AbstractMockEnemy;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
@@ -84,9 +83,9 @@ public class PlayScreen implements Screen{
         b2rd.render(world,gameCam.combined);
 
         caGame.batch.setProjectionMatrix(gameCam.combined);
-       /* caGame.batch.begin();
+        caGame.batch.begin();
         player.draw(caGame.batch);
-        caGame.batch.end();*/
+        caGame.batch.end();
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
