@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.player.Character;
+import org.academiadecodigo.vim4cache.gameObjects.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
@@ -24,9 +24,11 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
 /**
  * Created by codecadet on 30/03/17.
  */
-public class PlayScreen implements Screen{
+public class PlayScreen implements Screen {
 
     private CaGame caGame;
+    private boolean debug = false;
+    private boolean punching = false;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -47,14 +49,14 @@ public class PlayScreen implements Screen{
         atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(VariablesUtil.V_WIDTH/2, VariablesUtil.V_HEIGHT/2, gameCam);
+        gamePort = new FitViewport(VariablesUtil.V_WIDTH / VariablesUtil.PPM, VariablesUtil.V_HEIGHT / VariablesUtil.PPM, gameCam);
         hud = new Hud(caGame.batch);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("level1.tmx"); // tmx file
 
         renderer = new OrthogonalTiledMapRenderer(map);
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
+        gameCam.position.set(gamePort.getWorldWidth() / VariablesUtil.PPM, gamePort.getWorldHeight() / VariablesUtil.PPM, 0);
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
@@ -62,7 +64,7 @@ public class PlayScreen implements Screen{
         player = new Character(world, this);
         enemy = new MockEnemy(world, this);
 
-        new B2WorldCreator(world,map);
+        new B2WorldCreator(world, map);
     }
 
     @Override
@@ -80,7 +82,9 @@ public class PlayScreen implements Screen{
 
         renderer.render();
 
-        b2rd.render(world,gameCam.combined);
+        if (debug) {
+            b2rd.render(world, gameCam.combined);
+        }
 
         caGame.batch.setProjectionMatrix(gameCam.combined);
         caGame.batch.begin();
@@ -89,12 +93,15 @@ public class PlayScreen implements Screen{
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
+        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+
     }
 
     @Override
     public void resize(int width, int height) {
 
-        gamePort.update(width,height);
+        gamePort.update(width, height);
     }
 
     @Override
@@ -126,7 +133,10 @@ public class PlayScreen implements Screen{
         handleInput();
 
         player.update(dt);
-        world.step(1/60f, 6 ,2);
+        hud.update(dt);
+        world.step(1 / 60f, 6, 2);
+        enemy.update();
+        world.step(1 / 60f, 6, 2);
         gameCam.position.x = player.getB2body().getPosition().x; // posição inicial
 
         gameCam.update();
@@ -135,21 +145,32 @@ public class PlayScreen implements Screen{
 
     private void handleInput() {
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            punching = true;
+            player.getB2body().applyLinearImpulse(new Vector2(0, 0), player.getB2body().getWorldCenter(), true);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(20, 0), player.getB2body().getWorldCenter(), true);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(-20, 0), player.getB2body().getWorldCenter(), true);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, 20), player.getB2body().getWorldCenter(), true);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, -20), player.getB2body().getWorldCenter(), true);
         }
+
+
     }
 
     public World getWorld() {
@@ -158,5 +179,17 @@ public class PlayScreen implements Screen{
 
     public TextureAtlas getAtlas() {
         return atlas;
+    }
+
+    public boolean isPunching() {
+        return punching;
+    }
+
+    public void setPunching(boolean punching) {
+        this.punching = punching;
+    }
+
+    public void stopCharacter() {
+        player.getB2body().setLinearVelocity(0, 0);
     }
 }

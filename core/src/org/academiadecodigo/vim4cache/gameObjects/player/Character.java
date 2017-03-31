@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.gameObjects.player;
+package org.academiadecodigo.vim4cache.gameObjects;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
+import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite {
-    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, LEFTPUNCH, RIGHTPUNCH}
+    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, PUNCH}
 
     ;
     public State currentState;
@@ -26,15 +27,20 @@ public class Character extends Sprite {
     private Animation characterRight;
     private Animation characterLeft;
     private TextureRegion characterStanding;
-    private Animation punchRight;
-    private Animation punchLeft;
+    private Animation characterPunch;
     private Animation jump;
     private float stateTimer;
     private boolean runningRight;
+    private PlayScreen playScreen;
+    private boolean movingRight = false;
+    private boolean movingLeft = false;
+    private boolean movingUp = false;
+    private boolean movingDown = false;
 
 
     public Character(World world, PlayScreen playScreen) {
         super(playScreen.getAtlas().findRegion("player"));
+        this.playScreen = playScreen;
         this.world = world;
         defineCharacter();
         characterStanding = new TextureRegion(getTexture(), 312, 0, 40, 70);
@@ -44,12 +50,54 @@ public class Character extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        moveRightAnimation();
+        moveLeftAnimation();
+        moveUpAnimation();
+        moveDownAnimation();
+        attackAnimation();
+
+
+    }
+
+    public void moveUpAnimation() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 8; i < 12; i++)
             frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterRight = new Animation(0.3f, frames);
+        characterUp = new Animation(0.2f, frames);
         frames.clear();
+    }
 
+    public void moveDownAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterDown = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+    public void moveRightAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterRight = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+    public void moveLeftAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterLeft = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+    public void attackAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 4; i < 8; i++)
+            frames.add(new TextureRegion(getTexture(), i * 42, 80, 40, 70));
+        characterPunch = new Animation(0.2f, frames);
+        playScreen.setPunching(false);
+        frames.clear();
     }
 
     public void update(float delta) {
@@ -61,18 +109,38 @@ public class Character extends Sprite {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
-           /* case RIGHT:
-                region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
-                break;
-            case LEFT:
-                region = characterLeft.getKeyFrame(stateTimer, true);
-                break;
             case UP:
-                region = characterUp.getKeyFrame(stateTimer, true);
+                region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
+                if (characterUp.isAnimationFinished(stateTimer)) {
+                    playScreen.stopCharacter();
+                }
                 break;
             case DOWN:
-                region = characterDown.getKeyFrame(stateTimer, true);
-                break;*/
+                region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
+                if (characterDown.isAnimationFinished(stateTimer)) {
+                    playScreen.stopCharacter();
+                }
+                break;
+            case RIGHT:
+                region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
+                if (characterRight.isAnimationFinished(stateTimer)) {
+                    playScreen.stopCharacter();
+                }
+                break;
+            case LEFT:
+                region = (TextureRegion) characterLeft.getKeyFrame(stateTimer, true);
+                if (characterLeft.isAnimationFinished(stateTimer)) {
+                    playScreen.stopCharacter();
+                }
+                break;
+            case PUNCH:
+                region = (TextureRegion) characterPunch.getKeyFrame(stateTimer, true);
+                if (characterPunch.isAnimationFinished(stateTimer)) {
+                    playScreen.setPunching(false);
+                    playScreen.stopCharacter();
+                }
+                break;
+
             case STANDING:
             default:
                 region = characterStanding;
@@ -80,7 +148,8 @@ public class Character extends Sprite {
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+        }
+        if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
@@ -91,24 +160,33 @@ public class Character extends Sprite {
 
     public State getState() {
         if (b2body.getLinearVelocity().x > 0) {
+            movingRight = true;
             return State.RIGHT;
         }
         if (b2body.getLinearVelocity().x < 0) {
+            movingRight = true;
             return State.LEFT;
         }
         if (b2body.getLinearVelocity().y < 0) {
+            movingRight = true;
             return State.UP;
         }
         if (b2body.getLinearVelocity().y > 0) {
+            movingRight = true;
             return State.DOWN;
         }
+        if (playScreen.isPunching() == true) {
+            movingRight = true;
+            return State.PUNCH;
+        }
+
         return State.STANDING;
     }
 
     public void defineCharacter() {
         health = 100;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / 2, 32 / 2);
+        bodyDef.position.set(200 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 

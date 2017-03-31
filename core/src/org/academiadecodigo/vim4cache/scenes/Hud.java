@@ -20,6 +20,7 @@ public class Hud {
 
     private Viewport viewPort;
     private Integer time;
+    private float timeCount;
     private Integer health;
     private Integer score;
 
@@ -33,6 +34,7 @@ public class Hud {
     public Hud(SpriteBatch spriteBatch){
 
         time = 120;
+        timeCount = 0;
         health = 100;
         score = 0;
 
@@ -81,5 +83,16 @@ public class Hud {
         table.add(scoreLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    public void update(float delta){
+       timeCount += delta;
+
+        if(timeCount >=1){
+            time--;
+            countLabel.setText(String.format("%02d", time));
+            timeCount=0;
+        }
+
     }
 }
