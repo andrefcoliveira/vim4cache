@@ -232,12 +232,14 @@ public class PlayScreen implements Screen{
                         days.setLevel(caGame.getLevel());
                         caGame.setScreen(days);
                         dayScreen = true;
-                    System.out.println("On the door");
+                    System.out.println("oix");
+
                 }
 
                 if (fixA.getUserData().equals("player") && fixB.getUserData().equals("enemy") || fixA.getUserData().equals("enemy") && fixB.getUserData().equals("player")) {
 
                 }
+
             }
 
             @Override
