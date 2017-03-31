@@ -120,7 +120,7 @@ public class MockEnemy extends Sprite {
     }
 
 
-    public void hitByEnemy(AbstractMockEnemy enemy) {
+    public void hitByEnemy(MockEnemy enemy) {
 
     }
 
