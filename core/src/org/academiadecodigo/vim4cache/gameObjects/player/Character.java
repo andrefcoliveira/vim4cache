@@ -223,10 +223,10 @@ public class Character extends Sprite {
         this.health = health;
     }
 
-    public int characterAttackDamage(){
-        if (playScreen.isPunching() == true){
+    public int characterAttackDamage() {
+        if (playScreen.isPunching() == true) {
             Rectangle rectangel = new Rectangle();
-            rectangel.set(b2body.getPosition().x  + b2body.getPosition().x , b2body.getPosition().y, 50, 80);
+            rectangel.set(b2body.getPosition().x + b2body.getPosition().x, b2body.getPosition().y, 50, 80);
 
         }
         return 0;
