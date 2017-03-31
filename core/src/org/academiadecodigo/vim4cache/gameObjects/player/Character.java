@@ -12,7 +12,7 @@ import org.academiadecodigo.vim4cache.screens.PlayScreen;
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite {
-    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, RIGHTPUNCH}
+    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, PUNCH}
 
     ;
     public State currentState;
@@ -28,10 +28,12 @@ public class Character extends Sprite {
     private Animation jump;
     private float stateTimer;
     private boolean runningRight;
+    private PlayScreen playScreen;
 
 
     public Character(World world, PlayScreen playScreen) {
         super(playScreen.getAtlas().findRegion("player"));
+        this.playScreen = playScreen;
         this.world = world;
         defineCharacter();
         characterStanding = new TextureRegion(getTexture(), 312, 0, 40, 70);
@@ -48,29 +50,30 @@ public class Character extends Sprite {
 
     }
 
-    public void moveRightAnimation(){
+    public void moveRightAnimation() {
         Array<TextureRegion> frames = new Array<>();
         for (int i = 8; i < 12; i++)
             frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterRight = new Animation( 0.3f, frames);
+        characterRight = new Animation(0.3f, frames);
         frames.clear();
     }
 
-    public void moveLeftAnimation(){
+    public void moveLeftAnimation() {
         Array<TextureRegion> frames = new Array<>();
         for (int i = 8; i < 12; i++)
             frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterLeft = new Animation( 0.3f, frames);
+        characterLeft = new Animation(0.3f, frames);
         frames.clear();
     }
 
-    public void attackAnimation(){
+    public void attackAnimation() {
         Array<TextureRegion> frames = new Array<>();
-        for (int i = 8; i < 12; i++)
-            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterPunch = new Animation( 0.3f, frames);
+        for (int i = 5; i < 10; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 70, 40, 70));
+        characterPunch = new Animation(0.3f, frames);
         frames.clear();
     }
+
     public void update(float delta) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
@@ -79,12 +82,16 @@ public class Character extends Sprite {
     private TextureRegion getFrame(float delta) {
         currentState = getState();
         TextureRegion region;
+
         switch (currentState) {
             case RIGHT:
                 region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
                 break;
             case LEFT:
                 region = (TextureRegion) characterLeft.getKeyFrame(stateTimer, true);
+                break;
+            case PUNCH:
+                region = (TextureRegion) characterPunch.getKeyFrame(stateTimer, true);
                 break;
 
             case STANDING:
@@ -94,12 +101,15 @@ public class Character extends Sprite {
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+        }
+        if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
+
         stateTimer = currentState == previousState ? stateTimer + delta : 0;
         previousState = currentState;
+
         return region;
     }
 
@@ -116,6 +126,10 @@ public class Character extends Sprite {
         if (b2body.getLinearVelocity().y > 0) {
             return State.DOWN;
         }
+        if (playScreen.isPunching() == true) {
+            return State.PUNCH;
+        }
+
         return State.STANDING;
     }
 

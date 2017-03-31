@@ -27,6 +27,7 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
 public class PlayScreen implements Screen{
 
     private CaGame caGame;
+    private boolean punching = false;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -135,19 +136,29 @@ public class PlayScreen implements Screen{
 
     private void handleInput() {
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            punching = true;
+            player.getB2body().applyLinearImpulse(new Vector2(0, 0), player.getB2body().getWorldCenter(), true);
+        }
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(20, 0), player.getB2body().getWorldCenter(), true);
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
+            punching = false;
+
             player.getB2body().applyLinearImpulse(new Vector2(-20, 0), player.getB2body().getWorldCenter(), true);
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, 20), player.getB2body().getWorldCenter(), true);
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, -20), player.getB2body().getWorldCenter(), true);
         }
     }
@@ -158,5 +169,13 @@ public class PlayScreen implements Screen{
 
     public TextureAtlas getAtlas() {
         return atlas;
+    }
+
+    public boolean isPunching() {
+        return punching;
+    }
+
+    public void setPunching(boolean punching) {
+        this.punching = punching;
     }
 }
