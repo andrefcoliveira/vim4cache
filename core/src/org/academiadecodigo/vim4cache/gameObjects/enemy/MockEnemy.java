@@ -44,7 +44,7 @@ public class MockEnemy extends Sprite {
         enemyStand = new TextureRegion(getTexture(), 0, 0, 17, 40);
         setBounds(0, 0, 60, 100);
         setRegion(enemyStand);
-        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
+        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 200 / VariablesUtil.PPM);
 
         stateTime = 0;
         runningRight = true;
@@ -93,7 +93,7 @@ public class MockEnemy extends Sprite {
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set((int) (Math.random() * 2000) / VariablesUtil.PPM, (int) ((Math.random() * 100) / VariablesUtil.PPM) + 50);
+        bodyDef.position.set((int) (Math.random() *5000) / VariablesUtil.PPM, (int) ((Math.random() * 100) / VariablesUtil.PPM) + 50);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -108,7 +108,7 @@ public class MockEnemy extends Sprite {
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
 
-        b2Body.createFixture(fixtureDef).setUserData("enemygit ");
+        b2Body.createFixture(fixtureDef).setUserData("enemy");
         b2Body.setActive(true);
     }
 
