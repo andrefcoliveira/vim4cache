@@ -42,7 +42,7 @@ public class PlayScreen implements Screen{
 
     public PlayScreen(CaGame caGame) {
 
-        atlas = new TextureAtlas("characterAnimations.pack");
+        //atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(VariablesUtil.V_WIDTH/2, VariablesUtil.V_HEIGHT/2, gameCam);

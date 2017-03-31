@@ -70,9 +70,9 @@ public class Hud {
         //insert in table all the labels in the table, to see on the screen
 
         //not sure about the padding
-        table.add(timeLabel).expandX();
-        table.add(hpLabel).expandX();
-        table.add(scoreBoard).expandX();
+        table.add(timeLabel).expandX().padTop(10);
+        table.add(hpLabel).expandX().padTop(10);
+        table.add(scoreBoard).expandX().padTop(10);
 
         table.row();
 
