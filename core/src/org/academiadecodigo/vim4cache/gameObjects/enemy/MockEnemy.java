@@ -89,7 +89,7 @@ public class MockEnemy extends Sprite {
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set((int) (Math.random() * 1000) / VariablesUtil.PPM, (int) (Math.random() * 100) / VariablesUtil.PPM);
+        bodyDef.position.set((int) (Math.random() * 2000) / VariablesUtil.PPM, (int) ((Math.random() * 100) / VariablesUtil.PPM) + 50);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -164,7 +164,9 @@ public class MockEnemy extends Sprite {
     }
 
     public void onHit(Character character) {
-
+        if (this.getX() == character.getX() && playScreen.isPunching()) {
+            playScreen.getEnemyAtlas().dispose();
+        }
     }
 
 

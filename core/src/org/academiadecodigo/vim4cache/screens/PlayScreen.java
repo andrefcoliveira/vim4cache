@@ -43,6 +43,8 @@ public class PlayScreen implements Screen{
     private Character player;
     private MockEnemy enemy;
     private MockEnemy enemy1;
+    private MockEnemy enemy2;
+    private MockEnemy enemy3;
     private World world;
     private Hud hud;
     private TextureAtlas atlas;
@@ -69,6 +71,8 @@ public class PlayScreen implements Screen{
         player = new Character(world, this);
         enemy = new MockEnemy(world, this);
         enemy1 = new MockEnemy(world, this);
+        enemy2 = new MockEnemy(world, this);
+        enemy3 = new MockEnemy(world, this);
 
         new B2WorldCreator(world, map);
 
@@ -100,8 +104,16 @@ public class PlayScreen implements Screen{
         player.draw(caGame.batch);
         enemy.draw(caGame.batch);
         enemy1.draw(caGame.batch);
+        enemy2.draw(caGame.batch);
+        enemy3.draw(caGame.batch);
         enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
         enemy1.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy2.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy3.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
+        enemy.onHit(player);
+        enemy1.onHit(player);
+        enemy2.onHit(player);
+        enemy3.onHit(player);
 
         caGame.batch.end();
 
@@ -148,6 +160,8 @@ public class PlayScreen implements Screen{
         world.step(1 / 60f, 6, 2);
         enemy.update(dt);
         enemy1.update(dt);
+        enemy2.update(dt);
+        enemy3.update(dt);
         world.step(1 / 60f, 6, 2);
         gameCam.position.x = player.getB2body().getPosition().x; // Initial position
 
