@@ -9,8 +9,8 @@ public class User {
     private String name;
     private int score;
 
-    public User(String id, int name, int score) {
-        this.id = id;
+    public User( String name, int score) {
+        this.id = 0;
         this.name = name;
         this.score = score;
     }
