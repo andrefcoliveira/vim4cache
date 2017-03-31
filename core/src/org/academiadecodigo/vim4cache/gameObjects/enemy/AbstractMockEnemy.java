@@ -32,8 +32,7 @@ public abstract class AbstractMockEnemy extends Sprite {
         this.world = world;
         this.screen = screen;
         defineEnemy();
-        velocity = new Vector2(10, 0);
-        b2Body.setActive(false);
+        velocity = new Vector2(0, 0);
     }
 
     public void defineEnemy() {
@@ -57,7 +56,4 @@ public abstract class AbstractMockEnemy extends Sprite {
         }
     }
 
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
-    }
 }

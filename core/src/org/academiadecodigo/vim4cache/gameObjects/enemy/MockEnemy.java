@@ -38,7 +38,9 @@ public class MockEnemy extends AbstractMockEnemy {
 
         walkAnimation = new Animation(0.4f, frames);
 
-        setBounds(getX(), getY(), 16 / VariablesUtil.PPM, 16 / VariablesUtil.PPM);
+        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
+
+
     }
 
 
@@ -60,14 +62,15 @@ public class MockEnemy extends AbstractMockEnemy {
                 VariablesUtil.CHARACTER_BIT;
 
         fixtureDef.shape = shape;
-        bodyDef.linearVelocity.set(new Vector2(10, 0));
+        bodyDef.linearVelocity.set(new Vector2(0, 0));
         b2Body.createFixture(fixtureDef);
+        b2Body.setActive(true);
     }
 
     @Override
     public void update() {
         b2Body.setLinearVelocity(velocity);
-        b2Body.setActive(true);
+
         //setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
         //setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
@@ -77,10 +80,6 @@ public class MockEnemy extends AbstractMockEnemy {
 
     }
 
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
-    }
-
     @Override
     public void hitByEnemy(AbstractMockEnemy enemy) {
 
@@ -88,6 +87,13 @@ public class MockEnemy extends AbstractMockEnemy {
 
     public Vector2 chase(float charX, float charY) {
 
-        return velocity = new Vector2(charX, charY);
+        if (charX < this.getBoundingRectangle().getX()) {
+            System.out.println("bola à direita");
+            return velocity = new Vector2(charX / 3, charY / 3);
+
+        } else {
+            System.out.println("bola à esquerda");
+            return velocity = new Vector2(-charX / 3, charY / 3);
+        }
     }
 }
