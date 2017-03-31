@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
@@ -222,5 +223,13 @@ public class Character extends Sprite {
         this.health = health;
     }
 
+    public int characterAttackDamage(){
+        if (playScreen.isPunching() == true){
+            Rectangle rectangel = new Rectangle();
+            rectangel.set(b2body.getPosition().x  + b2body.getPosition().x , b2body.getPosition().y, 50, 80);
+
+        }
+        return 0;
+    }
 
 }
