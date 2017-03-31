@@ -35,6 +35,7 @@ public class Character extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private PlayScreen playScreen;
+    Fixture fixture;
     private boolean movingRight = false;
     private boolean movingLeft = false;
     private boolean movingUp = false;
@@ -197,16 +198,18 @@ public class Character extends Sprite {
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(15, 30);
+        fixtureDef.filter.categoryBits = VariablesUtil.CHARACTER_BIT;
+        fixtureDef.filter.maskBits = VariablesUtil.ENEMY_BIT | VariablesUtil.OBJECT_BIT;
 
 
         fixtureDef.shape = polygonShape;
-        b2body.createFixture(fixtureDef);
+        fixture = b2body.createFixture(fixtureDef);
 
         EdgeShape frontSensor = new EdgeShape();
         frontSensor.set(new Vector2(-30,40) , new Vector2(30,-40));
         fixtureDef.shape= frontSensor;
 
-        b2body.createFixture(fixtureDef).setUserData("player");
+        //b2body.createFixture(fixtureDef).setUserData("player");
 
 
     }
@@ -240,5 +243,7 @@ public class Character extends Sprite {
         }
         return 0;
     }
+
+
 
 }

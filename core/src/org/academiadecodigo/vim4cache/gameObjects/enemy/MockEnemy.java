@@ -31,6 +31,7 @@ public class MockEnemy extends Sprite {
     private Animation enemyLeft;
     private boolean runningRight;
 
+
     // Awesome randomness with the initial position of the enemies
     public MockEnemy(World world, PlayScreen screen) {
         super(screen.getEnemyAtlas().findRegion("enemy)"));
@@ -50,6 +51,7 @@ public class MockEnemy extends Sprite {
         moveDownAnimation();
         moveLeftAnimation();
         moveRightAnimation();
+
     }
 
     public void moveUpAnimation() {
@@ -87,7 +89,7 @@ public class MockEnemy extends Sprite {
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set((int) Math.random() * 300 / VariablesUtil.PPM, (int) Math.random() * 300 / VariablesUtil.PPM);
+        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -165,20 +167,30 @@ public class MockEnemy extends Sprite {
 
     }
 
+
     public void hitByEnemy(MockEnemy enemy) {
 
     }
 
-    // Soon to be an awesome randomness with the enemies velocity
+    // Awesome randomness with the enemies velocity
     public Vector2 chase(float charX, float charY) {
 
         if (charX > this.getBoundingRectangle().getX()) {
 
-            return velocity = new Vector2((charX / 30), (charY / 30));
+            return velocity = new Vector2((charX / 20), (charY / 20));
+
 
         } else {
 
-            return velocity = new Vector2((-charX / 30), (-charY / 30));
+            return velocity = new Vector2((-charX / 20), (-charY / 20));
+
+
         }
+    }
+
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        //fixture.setUserData(this);
     }
 }
