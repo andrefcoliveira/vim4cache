@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
+import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
  * Created by codecadet on 30/03/17.
@@ -136,8 +137,8 @@ public class Character extends Sprite {
             case PUNCH:
                 region = (TextureRegion) characterPunch.getKeyFrame(stateTimer, true);
                 if (characterPunch.isAnimationFinished(stateTimer)) {
-                    playScreen.stopCharacter();
                     playScreen.setPunching(false);
+                    playScreen.stopCharacter();
                 }
                 break;
 
@@ -188,17 +189,12 @@ public class Character extends Sprite {
     public void defineCharacter() {
         health = 100;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / 2, 32 / 2);
+        bodyDef.position.set(200/ VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
-
         FixtureDef fixtureDef = new FixtureDef();
-
-
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(15, 30);
-
-
         fixtureDef.shape = polygonShape;
         b2body.createFixture(fixtureDef);
     }

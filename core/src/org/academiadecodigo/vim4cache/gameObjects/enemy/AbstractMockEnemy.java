@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
 
 /**
@@ -31,8 +32,7 @@ public abstract class AbstractMockEnemy extends Sprite {
         this.world = world;
         this.screen = screen;
         defineEnemy();
-        velocity = new Vector2(-1, -2);
-        b2Body.setActive(false);
+        velocity = new Vector2(0, 0);
     }
 
     public void defineEnemy() {
@@ -55,4 +55,5 @@ public abstract class AbstractMockEnemy extends Sprite {
             velocity.y = -velocity.y;
         }
     }
+
 }
