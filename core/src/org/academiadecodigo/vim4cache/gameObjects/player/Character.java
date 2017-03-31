@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.gameObjects.player;
+package org.academiadecodigo.vim4cache.gameObjects;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -45,13 +45,37 @@ public class Character extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 8; i < 12; i++) {
-            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        }
-        characterRight = new Animation(2f, frames);
-        frames.clear();
 
+        Array<TextureRegion> frames = new Array();
+        moveRightAnimation();
+        moveLeftAnimation();
+        attackAnimation();
+
+    }
+
+    public void moveRightAnimation() {
+        Array<TextureRegion> frames = new Array<>();
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterRight = new Animation(0, 2f, frames);
+        frames.clear();
+    }
+
+    public void moveLeftAnimation() {
+
+        for (int i = 8; i < 12; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
+        characterLeft = new Animation(0.3f, frames);
+        frames.clear();
+    }
+
+    public void attackAnimation() {
+        Array<TextureRegion> frames = new Array<>();
+        for (int i = 4; i < 8; i++)
+            frames.add(new TextureRegion(getTexture(), i * 42, 80, 40, 70));
+        characterPunch = new Animation(0.2f, frames);
+        characterPunch.isAnimationFinished(stateTimer += 0.8);
+        frames.clear();
     }
 
     public void update(float delta) {
@@ -66,15 +90,13 @@ public class Character extends Sprite {
             case RIGHT:
                 region = (TextureRegion) characterRight.getKeyFrame(stateTimer, true);
                 break;
-            /*case LEFT:
-                region = (TextureRegion)characterLeft.getKeyFrame(stateTimer, true);
+            case LEFT:
+                region = (TextureRegion) characterLeft.getKeyFrame(stateTimer, true);
                 break;
-            case UP:
-                region = (TextureRegion) characterUp.getKeyFrame(stateTimer, true);
+            case PUNCH:
+                region = (TextureRegion) characterPunch.getKeyFrame(stateTimer, true);
                 break;
-            case DOWN:
-                region = (TextureRegion) characterDown.getKeyFrame(stateTimer, true);
-                break;*/
+
             case STANDING:
             default:
                 region = characterStanding;
@@ -82,7 +104,8 @@ public class Character extends Sprite {
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+        }
+        if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
@@ -104,13 +127,17 @@ public class Character extends Sprite {
         if (b2body.getLinearVelocity().y > 0) {
             return State.DOWN;
         }
+        if (playScreen.isPunching() == true) {
+            return State.PUNCH;
+        }
+
         return State.STANDING;
     }
 
     public void defineCharacter() {
         health = 100;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(200 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set(200/ VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 
@@ -118,7 +145,7 @@ public class Character extends Sprite {
 
 
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(18,20);
+        polygonShape.setAsBox(15, 30);
 
 
         fixtureDef.shape = polygonShape;
