@@ -100,10 +100,6 @@ public class MockEnemy extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / VariablesUtil.PPM);
-        //fixtureDef.filter.categoryBits = VariablesUtil.ENEMY_BIT;
-        /*fixtureDef.filter.maskBits = VariablesUtil.GROUND_BIT |
-                VariablesUtil.ENEMY_BIT |
-                VariablesUtil.OBJECT_BIT | VariablesUtil.CHARACTER_BIT;*/
 
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
@@ -148,7 +144,6 @@ public class MockEnemy extends Sprite {
         stateTime = currentState == previousState ? stateTime + delta : 0;
         previousState = currentState;
         return region;
-
     }
 
     public EnemyState getState() {
@@ -180,17 +175,18 @@ public class MockEnemy extends Sprite {
     // Awesome randomness with the enemies velocity
     public Vector2 chase(float charX, float charY) {
 
-        if (charX > this.getBoundingRectangle().getX()) {
+        if (charX > this.getBoundingRectangle().getX() && charY > this.getBoundingRectangle().getY()) {
 
-            return velocity = new Vector2((charX / 20), (charY / 20));
+            return velocity = new Vector2((charX / 25), (charY / 15));
 
+        } else if (charX < this.getBoundingRectangle().getX() && charY < this.getBoundingRectangle().getY()) {
 
+            return velocity = new Vector2((-charX / 25), (-charY / 15));
+
+        } else if (charX < this.getBoundingRectangle().getX() && charY > this.getBoundingRectangle().getY()) {
+            return velocity = new Vector2((-charX / 25), (charY / 15));
         } else {
-
-            return velocity = new Vector2((-charX / 20), (-charY / 20));
-
-
+            return velocity = new Vector2((charX / 25), (-charY / 15));
         }
     }
-
 }

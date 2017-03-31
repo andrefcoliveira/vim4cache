@@ -76,8 +76,6 @@ public class PlayScreen implements Screen{
         enemy3 = new MockEnemy(world, this);
 
         new B2WorldCreator(world, map);
-
-        world.setContactListener(new WorldContactListener());
     }
 
     @Override
@@ -234,14 +232,12 @@ public class PlayScreen implements Screen{
                         days.setLevel(caGame.getLevel());
                         caGame.setScreen(days);
                         dayScreen = true;
-                    System.out.println("oix");
-
+                    System.out.println("On the door");
                 }
 
                 if (fixA.getUserData().equals("player") && fixB.getUserData().equals("enemy") || fixA.getUserData().equals("enemy") && fixB.getUserData().equals("player")) {
 
                 }
-
             }
 
             @Override
@@ -259,7 +255,6 @@ public class PlayScreen implements Screen{
 
             }
         });
-
     }
 
     public World getWorld() {
