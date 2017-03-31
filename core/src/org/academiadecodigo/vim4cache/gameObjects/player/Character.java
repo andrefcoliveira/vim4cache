@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.gameObjects;
+package org.academiadecodigo.vim4cache.gameObjects.player;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -44,10 +44,10 @@ public class Character extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-        Array<TextureRegion> frames = new Array<>();
+        Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 8; i < 12; i++)
             frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterRight = new Animation(0, 2f, frames);
+        characterRight = new Animation(0.3f, frames);
         frames.clear();
 
     }
