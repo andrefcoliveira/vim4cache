@@ -5,22 +5,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import javafx.scene.input.MouseEvent;
 import org.academiadecodigo.vim4cache.CaGame;
 import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
-import org.academiadecodigo.vim4cache.tools.WorldContactListener;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
@@ -31,6 +29,7 @@ public class PlayScreen implements Screen{
     private CaGame caGame;
     private boolean debug = false;
     private boolean punching = false;
+    private boolean dayScreen=false;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -38,6 +37,7 @@ public class PlayScreen implements Screen{
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private Box2DDebugRenderer b2rd;
+    private Days days;
 
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
@@ -49,6 +49,7 @@ public class PlayScreen implements Screen{
     private Hud hud;
     private TextureAtlas atlas;
     private TextureAtlas enemyAtlas;
+    private Texture menuEnd;
 
     public PlayScreen(CaGame caGame) {
 
@@ -93,6 +94,19 @@ public class PlayScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
+
+        if(dayScreen){
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            caGame.setScreen(new PlayScreen(caGame));
+            dayScreen=false;
+        }
+
 
         if (debug) {
             b2rd.render(world, gameCam.combined);
@@ -158,7 +172,7 @@ public class PlayScreen implements Screen{
     public void update(float dt) {
 
         handleInput();
-
+        collisionListener();
         player.update(dt);
         hud.update(dt);
         world.step(1 / 60f, 6, 2);
@@ -199,6 +213,53 @@ public class PlayScreen implements Screen{
             punching = false;
             player.getB2body().applyLinearImpulse(new Vector2(0, -40), player.getB2body().getWorldCenter(), true);
         }
+    }
+
+    private void collisionListener(){
+
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                Fixture fixA = contact.getFixtureA();
+                Fixture fixB = contact.getFixtureB();
+
+                if(fixA.getUserData() == null || fixB.getUserData() == null){
+                    return;
+                }
+
+                if (fixA.getUserData().equals("player") && fixB.getUserData().equals("door") ||
+                        fixA.getUserData().equals("door") && fixB.getUserData().equals("player")) {
+                        caGame.setLevel(caGame.getLevel()+1);
+                        days = new Days(caGame);
+                        days.setLevel(caGame.getLevel());
+                        caGame.setScreen(days);
+                        dayScreen = true;
+                    System.out.println("oix");
+
+                }
+
+                if (fixA.getUserData().equals("player") && fixB.getUserData().equals("enemy") || fixA.getUserData().equals("enemy") && fixB.getUserData().equals("player")) {
+
+                }
+
+            }
+
+            @Override
+            public   void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
+
     }
 
     public World getWorld() {
