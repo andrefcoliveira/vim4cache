@@ -15,8 +15,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
+import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
@@ -27,6 +27,7 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
 public class PlayScreen implements Screen{
 
     private CaGame caGame;
+    private boolean debug = false;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -80,7 +81,9 @@ public class PlayScreen implements Screen{
 
         renderer.render();
 
-        b2rd.render(world,gameCam.combined);
+        if(debug) {
+            b2rd.render(world, gameCam.combined);
+        }
 
         caGame.batch.setProjectionMatrix(gameCam.combined);
         caGame.batch.begin();
@@ -126,6 +129,7 @@ public class PlayScreen implements Screen{
         handleInput();
 
         player.update(dt);
+        hud.update(dt);
         world.step(1/60f, 6 ,2);
         gameCam.position.x = player.getB2body().getPosition().x; // posição inicial
 
