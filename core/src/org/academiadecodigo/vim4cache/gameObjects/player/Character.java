@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
+import sun.management.Sensor;
 
 /**
  * Created by codecadet on 30/03/17.
@@ -16,8 +18,8 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
 public class Character extends Sprite {
     public enum State {STANDING, UP, DOWN, LEFT, RIGHT, PUNCH}
 
-    ;
     public State currentState;
+    public boolean game = true;
     public State previousState;
     private int health;
     private World world;
@@ -51,6 +53,8 @@ public class Character extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+
+        Array<TextureRegion> frames = new Array();
         moveRightAnimation();
         moveLeftAnimation();
         moveUpAnimation();
@@ -187,7 +191,7 @@ public class Character extends Sprite {
     public void defineCharacter() {
         health = 100;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(200 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set(200/ VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 
@@ -200,6 +204,14 @@ public class Character extends Sprite {
 
         fixtureDef.shape = polygonShape;
         b2body.createFixture(fixtureDef);
+
+        EdgeShape frontSensor = new EdgeShape();
+        frontSensor.set(new Vector2(-30,40) , new Vector2(30,-40));
+        fixtureDef.shape= frontSensor;
+
+        b2body.createFixture(fixtureDef).setUserData("player");
+
+
     }
 
 

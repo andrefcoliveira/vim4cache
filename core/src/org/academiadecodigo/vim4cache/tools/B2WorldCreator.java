@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import org.academiadecodigo.vim4cache.gameObjects.FinalDoor;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
@@ -68,6 +69,13 @@ public class B2WorldCreator {
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
         }
+
+        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            new FinalDoor(world,map,rect);
+        }
+
        
     }
 
