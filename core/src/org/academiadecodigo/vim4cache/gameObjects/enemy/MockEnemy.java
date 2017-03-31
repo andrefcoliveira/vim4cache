@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.vim4cache.screens.PlayScreen;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
@@ -19,11 +20,12 @@ public class MockEnemy extends AbstractMockEnemy {
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-    public MockEnemy(PlayScreen screen, float x, float y) {
-        super(screen, x, y);
+
+    public MockEnemy(World world, PlayScreen screen) {
+        super(world, screen);
         frames = new Array<TextureRegion>();
         for (int i = 0; i < 2; i++) {
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("MockEnemy"), i * 16, 0, 16, 16));
+            //frames.add(new TextureRegion(screen.getAtlas().findRegion("MockEnemy"), i * 16, 0, 16, 16));
         }
 
         walkAnimation = new Animation(0.4f, frames);
@@ -44,7 +46,7 @@ public class MockEnemy extends AbstractMockEnemy {
     }
 
     @Override
-    protected void defineEnemy() {
+    public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(32 / VariablesUtil.PPM, 32 / VariablesUtil.PPM);
@@ -62,5 +64,20 @@ public class MockEnemy extends AbstractMockEnemy {
 
         fixtureDef.shape = shape;
         b2Body.createFixture(fixtureDef);
+    }
+
+    @Override
+    public void update() {
+        setPosition(b2Body.getPosition().x-getWidth()/2 , b2Body.getPosition().y - getHeight()/2);
+    }
+
+    @Override
+    public void onHit(Character character) {
+
+    }
+
+    @Override
+    public void hitByEnemy(AbstractMockEnemy enemy) {
+
     }
 }
