@@ -31,12 +31,12 @@ public class Hud {
     Label scoreLabel;
     Label scoreBoard;
 
-    public Hud(SpriteBatch spriteBatch){
+    public Hud(SpriteBatch spriteBatch) {
 
         time = 120;
         timeCount = 0;
         health = 100;
-        score = 0;
+        score = 00000;
 
         viewPort = new FitViewport(VariablesUtil.V_WIDTH, VariablesUtil.V_HEIGHT, new OrthographicCamera());
 
@@ -47,8 +47,6 @@ public class Hud {
 
         table.top();
         table.setFillParent(true);
-
-        //colors of our text
 
         //timer set and color
         countLabel = new Label(String.format("%02d", time), new Label.LabelStyle(new BitmapFont(), Color.RED));
@@ -69,9 +67,6 @@ public class Hud {
         scoreBoard = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreBoard.setFontScale(4);
 
-        //insert in table all the labels in the table, to see on the screen
-
-        //not sure about the padding
         table.add(timeLabel).expandX().padTop(10);
         table.add(hpLabel).expandX().padTop(10);
         table.add(scoreBoard).expandX().padTop(10);
@@ -85,14 +80,27 @@ public class Hud {
         stage.addActor(table);
     }
 
-    public void update(float delta){
-       timeCount += delta;
+    public void update(float delta) {
+        timeCount += delta;
 
-        if(timeCount >=1){
+        if (timeCount >= 1) {
             time--;
-            countLabel.setText(String.format("%02d", time));
-            timeCount=0;
-        }
+            score++;
+            health--;
 
+            countLabel.setText(String.format("%02d", time));
+            scoreLabel.setText(String.format("%05d", score));
+            healthLabel.setText(String.format("%03d", health));
+
+            timeCount = 0;
+        }
+    }
+
+    public Integer getHealth() {
+        return health;
+    }
+
+    public Integer getScore() {
+        return score;
     }
 }

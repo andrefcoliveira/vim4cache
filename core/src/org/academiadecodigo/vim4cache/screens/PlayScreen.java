@@ -19,12 +19,13 @@ import org.academiadecodigo.vim4cache.gameObjects.player.Character;
 import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
+import org.academiadecodigo.vim4cache.tools.WorldContactListener;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
 
 /**
  * Created by codecadet on 30/03/17.
  */
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen{
 
     private CaGame caGame;
     private boolean debug = false;
@@ -67,6 +68,8 @@ public class PlayScreen implements Screen {
         enemy = new MockEnemy(world, this);
 
         new B2WorldCreator(world, map);
+
+        world.setContactListener(new WorldContactListener());
     }
 
     @Override
