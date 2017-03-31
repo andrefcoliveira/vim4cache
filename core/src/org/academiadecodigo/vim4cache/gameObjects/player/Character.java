@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.gameObjects;
+package org.academiadecodigo.vim4cache.gameObjects.player;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
