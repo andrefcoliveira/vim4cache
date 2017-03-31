@@ -1,0 +1,8 @@
+CREATE DATABASE score;
+USE score;
+CREATE TABLE list (
+id INT AUTO_INCREMENT,
+name CHAR(3),
+score INT(11),
+PRIMARY KEY(id)
+);

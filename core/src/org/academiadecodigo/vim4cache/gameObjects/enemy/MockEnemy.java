@@ -199,6 +199,6 @@ public class MockEnemy extends Sprite {
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
-        fixture.setUserData(this);
+        //fixture.setUserData(this);
     }
 }
