@@ -77,7 +77,7 @@ public class PlayScreen implements Screen{
 
         new B2WorldCreator(world, map);
 
-        world.setContactListener(new WorldContactListener());
+        //world.setContactListener(new WorldContactListener());
     }
 
     @Override
