@@ -92,13 +92,11 @@ public class PlayScreen implements Screen {
         caGame.batch.begin();
         player.draw(caGame.batch);
         enemy.draw(caGame.batch);
+        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
         caGame.batch.end();
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
-        enemy.chase(player.getBoundingRectangle().getX(), player.getBoundingRectangle().getY());
-
     }
 
     @Override

@@ -50,7 +50,7 @@ public class MockEnemy extends Sprite {
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / VariablesUtil.PPM, 32 / VariablesUtil.PPM);
+        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -65,6 +65,7 @@ public class MockEnemy extends Sprite {
 
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
+        
         b2Body.createFixture(fixtureDef);
         b2Body.setActive(true);
     }
@@ -91,13 +92,14 @@ public class MockEnemy extends Sprite {
 
         if (charX < this.getBoundingRectangle().getX()) {
 
-            return velocity = new Vector2((charX / (int) (Math.random() * 4)),
-                    (charY / (int) (Math.random() * 4)));
+            return velocity = new Vector2((charX /  3), (charY / 3));
+
 
         } else {
 
-            return velocity = new Vector2((-charX / (int) (Math.random() * 4)),
-                    (charY / (int) (Math.random() * 4)));
+            return velocity = new Vector2((-charX / 4),(charY / 4));
+
+
         }
     }
 }
