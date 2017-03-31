@@ -38,12 +38,13 @@ public class PlayScreen implements Screen{
 
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
-    private AbstractMockEnemy enemy;
+    private MockEnemy enemy;
     private World world;
     private Hud hud;
     private TextureAtlas atlas;
 
     public PlayScreen(CaGame caGame) {
+
         atlas = new TextureAtlas("characterAnimations.pack");
         this.caGame = caGame;
         gameCam = new OrthographicCamera();
@@ -83,20 +84,18 @@ public class PlayScreen implements Screen{
         b2rd.render(world,gameCam.combined);
 
         caGame.batch.setProjectionMatrix(gameCam.combined);
-        caGame.batch.begin();
+       /* caGame.batch.begin();
         player.draw(caGame.batch);
-        caGame.batch.end();
+        caGame.batch.end();*/
 
         caGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
     }
 
     @Override
     public void resize(int width, int height) {
 
         gamePort.update(width,height);
-
     }
 
     @Override
@@ -121,8 +120,6 @@ public class PlayScreen implements Screen{
         renderer.dispose();
         world.dispose();
         b2rd.dispose();
-
-
     }
 
     public void update(float dt) {
@@ -135,7 +132,6 @@ public class PlayScreen implements Screen{
 
         gameCam.update();
         renderer.setView(gameCam);
-
     }
 
     private void handleInput() {

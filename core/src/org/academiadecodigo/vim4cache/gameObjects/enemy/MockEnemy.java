@@ -20,7 +20,6 @@ public class MockEnemy extends AbstractMockEnemy {
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-
     public MockEnemy(World world, PlayScreen screen) {
         super(world, screen);
         frames = new Array<TextureRegion>();
@@ -68,7 +67,9 @@ public class MockEnemy extends AbstractMockEnemy {
 
     @Override
     public void update() {
+        b2Body.setLinearVelocity(velocity);
         setPosition(b2Body.getPosition().x-getWidth()/2 , b2Body.getPosition().y - getHeight()/2);
+        setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
 
     @Override
