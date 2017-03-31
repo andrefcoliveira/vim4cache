@@ -29,7 +29,7 @@ public class Menu implements Screen {
     public Menu(CaGame caGame) {
         this.caGame = caGame;
         viewPort = new FitViewport(VariablesUtil.V_WIDTH/VariablesUtil.PPM, VariablesUtil.V_HEIGHT/VariablesUtil.PPM, new OrthographicCamera());
-        menu = new Texture("in5.png");
+        menu = new Texture("in7.png");
 
     }
 
@@ -47,7 +47,7 @@ public class Menu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         caGame.batch.begin();
-        caGame.batch.draw(menu , 80 , 80);
+        caGame.batch.draw(menu , 15 , 15);
         caGame.batch.end();
     }
 
