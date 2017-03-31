@@ -1,6 +1,7 @@
 package org.academiadecodigo.vim4cache.gameObjects.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +23,10 @@ public class MockEnemy extends Sprite {
     private Body b2Body;
     private Vector2 velocity;
     private PlayScreen playScreen;
+    private Animation enemyUp;
+    private Animation enemyDown;
+    private Animation enemyRight;
+    private Animation enemyLeft;
 
     // Awesome randomness with the initial position of the enemies
     public MockEnemy(World world, PlayScreen screen) {
@@ -29,28 +34,61 @@ public class MockEnemy extends Sprite {
         this.playScreen = screen;
         this.world = world;
         velocity = new Vector2((int) (Math.random() * 100), (int) (Math.random() * 100));
-        frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(new Texture("coisa.png")));
-        for (int i = 0; i < 2; i++) {
-            //frames.add(new TextureRegion(screen.getAtlas().findRegion("MockEnemy"), i * 16, 0, 16, 16));
-
-        }
 
         defineEnemy();
-        enemyStand = new TextureRegion(getTexture(), 23, 0, 23, 35);
-        setBounds(0, 0, 23 / VariablesUtil.PPM, 35 / VariablesUtil.PPM);
+        enemyStand = new TextureRegion(getTexture(), 0, 0, 17, 40);
+        setBounds(0, 0, 60 , 100 );
         setRegion(enemyStand);
-
-        stateTime = 1;
-
         setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
 
+        stateTime = 0;
+
+      moveUpAnimation();
+      moveDownAnimation();
+      moveLeftAnimation();
+      moveRightAnimation();
+
     }
+
+    public void moveUpAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < 5; i++)
+            frames.add(new TextureRegion(getTexture(), i * 17, 0, 40, 70));
+        enemyUp = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+    public void moveDownAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < 5; i++)
+            frames.add(new TextureRegion(getTexture(), i * 17, 0, 40, 70));
+        enemyDown = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+    public void moveRightAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < 5; i++)
+            frames.add(new TextureRegion(getTexture(), i * 17, 0, 17, 40));
+        enemyRight = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+    public void moveLeftAnimation() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < 5; i++)
+            frames.add(new TextureRegion(getTexture(), i * 40, 0, 17, 40));
+        enemyLeft = new Animation(0.2f, frames);
+        frames.clear();
+    }
+
+
+
 
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(250 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -92,12 +130,12 @@ public class MockEnemy extends Sprite {
 
         if (charX > this.getBoundingRectangle().getX()) {
 
-            return velocity = new Vector2((charX /  10), (charY / 10));
+            return velocity = new Vector2((charX / 10), (charY / 10));
 
 
         } else {
 
-            return velocity = new Vector2((-charX / 10),(-charY / 10));
+            return velocity = new Vector2((-charX / 10), (-charY / 10));
 
 
         }
