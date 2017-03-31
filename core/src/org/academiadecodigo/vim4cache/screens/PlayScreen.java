@@ -15,7 +15,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.vim4cache.CaGame;
-import org.academiadecodigo.vim4cache.gameObjects.player.Character;
+import org.academiadecodigo.vim4cache.gameObjects.Character;
+import org.academiadecodigo.vim4cache.gameObjects.enemy.MockEnemy;
 import org.academiadecodigo.vim4cache.scenes.Hud;
 import org.academiadecodigo.vim4cache.tools.B2WorldCreator;
 import org.academiadecodigo.vim4cache.util.VariablesUtil;
@@ -36,7 +37,7 @@ public class PlayScreen implements Screen{
 
     private OrthogonalTiledMapRenderer renderer;
     private Character player;
-    private AbstractMockEnemy enemy;
+    private MockEnemy enemy;
     private World world;
     private Hud hud;
     private TextureAtlas atlas;

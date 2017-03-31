@@ -86,14 +86,14 @@
   <object id="37" x="3424" y="16" width="48" height="64"/>
  </objectgroup>
  <objectgroup name="ground" opacity="0.2">
-  <object id="50" x="0" y="320" width="3839.02" height="7.98893"/>
+  <object id="50" x="0" y="320" width="7680" height="7.98893"/>
  </objectgroup>
  <objectgroup color="#d5d415" name="topLimit" opacity="0.3">
-  <object id="55" x="0" y="-10" width="3840" height="16"/>
+  <object id="55" x="0" y="-10" width="7680" height="16"/>
   <object id="56" x="3635.02" y="-23.8389"/>
  </objectgroup>
  <objectgroup name="rightLimit" opacity="0.29">
-  <object id="59" x="3824" y="0" width="16" height="320"/>
+  <object id="59" x="7680" y="0" width="16" height="320"/>
  </objectgroup>
  <objectgroup name="doors">
   <object id="23" x="3600" y="144" width="48" height="64"/>
