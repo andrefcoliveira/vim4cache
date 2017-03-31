@@ -15,14 +15,13 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
  * Created by codecadet on 30/03/17.
  */
 public class MockEnemy extends Sprite {
-    public enum EnemyState {STANDING, UP, DOWN, LEFT, RIGHT, }
+    public enum EnemyState {STANDING, UP, DOWN, LEFT, RIGHT,}
 
     public EnemyState currentState;
     public EnemyState previousState;
     private final World world;
     private float stateTime;
     private Array<TextureRegion> frames;
-    private Fixture fixture;
     private TextureRegion enemyStand;
     private Body b2Body;
     private Vector2 velocity;
@@ -94,7 +93,7 @@ public class MockEnemy extends Sprite {
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(500 / VariablesUtil.PPM, 100 / VariablesUtil.PPM);
+        bodyDef.position.set((int) (Math.random() * 2000) / VariablesUtil.PPM, (int) ((Math.random() * 100) / VariablesUtil.PPM) + 50);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bodyDef);
 
@@ -109,7 +108,7 @@ public class MockEnemy extends Sprite {
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
 
-        b2Body.createFixture(fixtureDef).setUserData("enemy");
+        b2Body.createFixture(fixtureDef).setUserData("enemygit ");
         b2Body.setActive(true);
     }
 
@@ -169,11 +168,10 @@ public class MockEnemy extends Sprite {
         return EnemyState.STANDING;
     }
 
-
-
-    public void onHit() {
-
-
+    public void onHit(Character character) {
+        if (this.getX() == character.getX() && playScreen.isPunching()) {
+            playScreen.getEnemyAtlas().dispose();
+        }
     }
 
 

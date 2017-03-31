@@ -40,7 +40,6 @@ public class Character extends Sprite {
     private boolean movingUp = false;
     private boolean movingDown = false;
 
-
     public Character(World world, PlayScreen playScreen) {
         super(playScreen.getAtlas().findRegion("player"));
         this.playScreen = playScreen;
@@ -60,8 +59,6 @@ public class Character extends Sprite {
         moveUpAnimation();
         moveDownAnimation();
         attackAnimation();
-
-
     }
 
     public void moveUpAnimation() {

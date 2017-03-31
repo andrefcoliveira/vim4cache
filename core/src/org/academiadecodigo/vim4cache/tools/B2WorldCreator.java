@@ -54,8 +54,6 @@ public class B2WorldCreator {
             shape.setAsBox(rect.getWidth()/2 / VariablesUtil.PPM, rect.getHeight()/2/ VariablesUtil.PPM);
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
-
-
         }
 
         for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
@@ -75,8 +73,5 @@ public class B2WorldCreator {
 
             new FinalDoor(world,map,rect);
         }
-
-       
     }
-
 }
