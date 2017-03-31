@@ -68,9 +68,10 @@ public class Character extends Sprite {
 
     public void attackAnimation() {
         Array<TextureRegion> frames = new Array<>();
-        for (int i = 5; i < 10; i++)
-            frames.add(new TextureRegion(getTexture(), i * 40, 70, 40, 70));
-        characterPunch = new Animation(0.3f, frames);
+        for (int i = 4; i < 8; i++)
+            frames.add(new TextureRegion(getTexture(), i * 42, 80, 40, 70));
+        characterPunch = new Animation(0.2f, frames);
+        characterPunch.isAnimationFinished(stateTimer += 0.8);
         frames.clear();
     }
 
