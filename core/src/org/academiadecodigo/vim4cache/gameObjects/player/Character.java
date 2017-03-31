@@ -1,4 +1,4 @@
-package org.academiadecodigo.vim4cache.gameObjects;
+package org.academiadecodigo.vim4cache.gameObjects.player;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,29 +13,26 @@ import org.academiadecodigo.vim4cache.util.VariablesUtil;
  * Created by codecadet on 30/03/17.
  */
 public class Character extends Sprite {
-    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, LEFTPUNCH, RIGHTPUNCH}
+    public enum State {STANDING, UP, DOWN, LEFT, RIGHT, PUNCH};
 
-    ;
     public State currentState;
     public State previousState;
     private int health;
     private World world;
     private Screen screen;
     private Body b2body;
-    private Animation characterUp;
-    private Animation characterDown;
+    private Animation characterPunch;
     private Animation characterRight;
     private Animation characterLeft;
     private TextureRegion characterStanding;
-    private Animation punchRight;
-    private Animation punchLeft;
-    private Animation jump;
     private float stateTimer;
     private boolean runningRight;
+    private PlayScreen playScreen;
 
 
     public Character(World world, PlayScreen playScreen) {
         super(playScreen.getAtlas().findRegion("player"));
+        this.playScreen = playScreen;
         this.world = world;
         defineCharacter();
         characterStanding = new TextureRegion(getTexture(), 312, 0, 40, 70);
@@ -54,15 +51,16 @@ public class Character extends Sprite {
     }
 
     public void moveRightAnimation() {
-        Array<TextureRegion> frames = new Array<>();
+        Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 8; i < 12; i++)
             frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
-        characterRight = new Animation(0, 2f, frames);
+        characterRight = new Animation( 0.3f, frames);
         frames.clear();
     }
 
     public void moveLeftAnimation() {
 
+        Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 8; i < 12; i++)
             frames.add(new TextureRegion(getTexture(), i * 40, 0, 40, 70));
         characterLeft = new Animation(0.3f, frames);
@@ -70,7 +68,7 @@ public class Character extends Sprite {
     }
 
     public void attackAnimation() {
-        Array<TextureRegion> frames = new Array<>();
+        Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 4; i < 8; i++)
             frames.add(new TextureRegion(getTexture(), i * 42, 80, 40, 70));
         characterPunch = new Animation(0.2f, frames);
