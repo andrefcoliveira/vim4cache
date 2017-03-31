@@ -65,7 +65,7 @@ public class MockEnemy extends Sprite {
 
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
-        
+
         b2Body.createFixture(fixtureDef);
         b2Body.setActive(true);
     }
