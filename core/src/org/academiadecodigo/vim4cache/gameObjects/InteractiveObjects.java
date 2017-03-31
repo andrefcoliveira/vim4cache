@@ -18,6 +18,7 @@ public abstract class InteractiveObjects {
     protected Body body;
     protected Fixture fixture;
 
+
     public InteractiveObjects(World world, TiledMap map, Rectangle bounds) {
         this.world = world;
         this.map = map;

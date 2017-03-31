@@ -1,5 +1,6 @@
 package org.academiadecodigo.vim4cache.gameObjects.enemy;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -40,10 +41,10 @@ public class MockEnemy extends Sprite {
         velocity = new Vector2((int) (Math.random() * 100), (int) (Math.random() * 100));
 
         defineEnemy();
-        enemyStand = new TextureRegion(getTexture(), 10, 10, 17, 40);
+        enemyStand = new TextureRegion(getTexture(), 0, 0, 17, 40);
         setBounds(0, 0, 60, 100);
         setRegion(enemyStand);
-        setBounds((int) Math.random() * 100, (int) Math.random() * 100, 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
+        setBounds(getX(), getY(), 160 / VariablesUtil.PPM, 160 / VariablesUtil.PPM);
 
         stateTime = 0;
         runningRight = true;
@@ -86,6 +87,9 @@ public class MockEnemy extends Sprite {
         frames.clear();
     }
 
+
+
+
     public void defineEnemy() {
 
         BodyDef bodyDef = new BodyDef();
@@ -104,7 +108,7 @@ public class MockEnemy extends Sprite {
         fixtureDef.shape = shape;
         bodyDef.linearVelocity.set(new Vector2(0, 0));
 
-        b2Body.createFixture(fixtureDef).setUserData("enemy");
+        b2Body.createFixture(fixtureDef).setUserData("enemygit ");
         b2Body.setActive(true);
     }
 
@@ -144,6 +148,7 @@ public class MockEnemy extends Sprite {
         stateTime = currentState == previousState ? stateTime + delta : 0;
         previousState = currentState;
         return region;
+
     }
 
     public EnemyState getState() {
@@ -190,9 +195,4 @@ public class MockEnemy extends Sprite {
         }
     }
 
-    public void setCategoryFilter(short filterBit) {
-        Filter filter = new Filter();
-        filter.categoryBits = filterBit;
-        //fixture.setUserData(this);
-    }
 }
